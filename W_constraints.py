@@ -16,9 +16,9 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # special datasets/histograms representing these and systematic effects 
   # but for now this is just kept simple 
   processName = "WJets" # Give a name of the process being modelled
-  metname = "mvamet"    # Observable variable name 
+  metname = "met"    # Observable variable name 
   targetmc     = _fin.Get("signal_wjets")      # define monimal (MC) of which process this config will model
-  controlmc    = _fin.Get("singlemuon_wjets")  # defines in / out acceptance
+  controlmc    = _fin.Get("Wmn_wjets")  # defines in / out acceptance
 
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
   # transfer factors (named with extention _sysname_Up/Down

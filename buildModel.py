@@ -47,8 +47,7 @@ for cat_id,cat in enumerate(x.categories):
   samples = cat['samples'].keys()
   for sample in samples:
       entry = cat['samples'][sample]
-      mb.addSample(sample,entry[0],entry[1],entry[2],entry[3])  # name, region, process, is_mc, is_signal
-  
+      mb.addSample(sample,entry[0],entry[1],entry[2],entry[3])  # name, region, process, is_mc, is_signal  
   mb.save()
 
   # Add any 'cutstring' for future reference

@@ -35,21 +35,24 @@ class ModelBuilder {
    save_datas.clear();
   };
   void add_cut(std::string, std::string);
-  void addvariable(std::string v, int nb, double mn, double mx){
-   TH1F *var_hist = new TH1F(Form("base_%s",v.c_str()),Form("Base Hist %s",v.c_str()),nb,mn,mx);
-   additional_vars.insert(std::pair<std::string,TH1F*>(v,var_hist));
-  }
-  void setvariable(std::string v, double l, double u){
-   varstring = v;
-   RooRealVar var(varstring.c_str(),varstring.c_str(),l,u);
-   var.setMin(l); var.setMax(u);
-   wspace->import(var);
-   min = l;
-   max = u;
 
+  void addvariable(std::string v, int nb, double mn, double mx){
+      TH1F *var_hist = new TH1F(Form("base_%s",v.c_str()),Form("Base Hist %s",v.c_str()),nb,mn,mx);
+      additional_vars.insert(std::pair<std::string,TH1F*>(v,var_hist));
+  }
+
+  void setvariable(std::string v, double l, double u){
+      varstring = v;
+      RooRealVar var(varstring.c_str(),varstring.c_str(),l,u);
+      var.setMin(l); var.setMax(u);
+      wspace->import(var);
+      min = l;
+      max = u;
+      
   };
+
   void setweight(std::string w){
-    RooRealVar weight(w.c_str(),w.c_str(),0,100000);
+    RooRealVar weight(w.c_str(),w.c_str(),-1000000,100000);
     weight.removeRange();
     wspace->import(weight);
     weightname = w;
@@ -65,6 +68,7 @@ class ModelBuilder {
   std::string varstring;
   std::string weightname;
   std::string catname;
+  
   TH1F *lTmp;
   TFile *fIn;
   TDirectory *fOut;

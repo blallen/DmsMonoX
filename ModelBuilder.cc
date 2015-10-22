@@ -8,25 +8,9 @@ void ModelBuilder::add_cut(std::string region,std::string ecut){
 
 void ModelBuilder::saveHist(TH1F *histogram){
    fOut->WriteTObject(histogram);
-   // also make a RooDataHist and RooHistPdf
-//   RooDataHist tmp_hist(Form("dhist_%s",histogram->GetName()),histogram->GetTitle(),RooArgList(*(wspace->var(varstring.c_str()))),histogram);
-//   wspace->import(tmp_hist);
-
-//   RooHistPdf tmp_pdf(Form("hpdf_%s",histogram->GetName()),histogram->GetTitle(),RooArgSet(*(wspace->var(varstring.c_str()))),*((RooDataHist*)(wspace->data(tmp_hist.GetName()))));
-//   wspace->import(tmp_pdf);
 }
 const char * ModelBuilder::turnon(RooWorkspace *ws,RooRealVar &x,std::string ext){
-   /*
-   RooRealVar m1(Form("plaw_p_%s",ext.c_str()),"p",-4.,-10.,0.);
-   RooRealVar eff_mu(Form("eff_mu_%s",ext.c_str()),"eff decay param mu",250,200.,1000.);
-   RooRealVar eff_sig(Form("eff_sig_%s",ext.c_str()),"eff decay param sigma ",1,0.,10.);
-   //RooGenericPdf *pdf = new RooGenericPdf(Form("powerLaw_%s",ext.c_str()), Form("powerLaw_%s",ext.c_str()),"TMath::Power(@0,@1)",RooArgList(x,m1));
-   // Same name as exponential for now
-   RooGenericPdf *pdf_pow = new RooGenericPdf(Form("doubleExponential_powerlaw%s",ext.c_str()), Form("doubleExponential_powerlaw%s",ext.c_str()),"TMath::Power(@0,@1)",RooArgList(x,m1));
-   RooGenericPdf *eff = new RooGenericPdf(Form("doubleExponential_efficiency%s",ext.c_str()),"Efficiency thing","0.5*(TMath::Erf((@0-@1)/@2)+1)",RooArgList(x,eff_mu,eff_sig));
-   //RooEffProd *pdf = new RooEffProd(Form("doubleExponential_%s",ext.c_str()), Form("doubleExponential_%s",ext.c_str()),*pdf_pow,eff);
-   RooProdPdf *pdf = new RooProdPdf(Form("doubleExponential_%s",ext.c_str()), Form("doubleExponential_%s",ext.c_str()),RooArgList(*pdf_pow,*eff));
-   */
+
    ext += catname;
    RooRealVar eff_mu(Form("eff_mu_%s",ext.c_str()),"eff decay param mu",240,200.,300.);
    RooRealVar eff_sig(Form("eff_sig_%s",ext.c_str()),"eff decay param sigma ",10,0.,20.);
@@ -34,7 +18,6 @@ const char * ModelBuilder::turnon(RooWorkspace *ws,RooRealVar &x,std::string ext
 
    RooRealVar m1(Form("plaw_p_%s",ext.c_str()),"p",-4.,-15.,0.);
    RooGenericPdf *pdf_pow = new RooGenericPdf(Form("doubleExponential_powerlaw%s",ext.c_str()), Form("doubleExponential_powerlaw%s",ext.c_str()),"TMath::Power(@0,@1)",RooArgList(x,m1));
-   //RooProdPdf *pdf = new RooProdPdf(Form("doubleExponential_%s",ext.c_str()), Form("doubleExponential_%s",ext.c_str()),RooArgList(*pdf_pow,eff));
    RooLognormal *pdf_l = new RooLognormal(Form("doubleExponential_log%s",ext.c_str()), Form("doubleExponential_log%s",ext.c_str()),x,eff_mu,eff_sig);
    RooAddPdf *pdf = new RooAddPdf(Form("doubleExponential_%s",ext.c_str()), Form("doubleExponential_%s",ext.c_str()),RooArgList(*pdf_pow,*pdf_l),RooArgList(frac));
    ws->import(*pdf);
@@ -44,32 +27,11 @@ const char * ModelBuilder::turnon(RooWorkspace *ws,RooRealVar &x,std::string ext
 const char * ModelBuilder::powerlaw(RooWorkspace *ws,RooRealVar &x,std::string ext){
    ext += catname;
    RooRealVar p(Form("p_%s",ext.c_str()),"p",-2.,-10.,0.01);
-   //RooGenericPdf *pdf = new RooGenericPdf(Form("powerLaw_%s",ext.c_str()), Form("powerLaw_%s",ext.c_str()),"TMath::Power(@0,@1)",RooArgList(x,m1));
    ws->import(p);
-   // Same name as exponential for now
    RooGenericPdf *pdf = new RooGenericPdf(Form("doubleExponential_%s",ext.c_str()), Form("doubleExponential_%s",ext.c_str()),"TMath::Power(@0,@1)",RooArgList(x,*(ws->var(p.GetName()))));
    ws->import(*pdf);
    return pdf->GetName(); 
 }
-/*
-const char * ModelBuilder::doubleexp(RooWorkspace *ws,RooRealVar &x,std::string ext){ 
-   ext += catname;
-   // Double exponential model
-  // RooRealVar frac(Form("f_%s",ext.c_str()),"f",0.8,0.,1.);
-  // RooRealVar m1(Form("m1_%s",ext.c_str()),"m1",-0.02,-0.3,0.0);
-  // RooRealVar m2(Form("m2_%s",ext.c_str()),"m2",-0.01,-0.3,0.0);
-   RooRealVar a(Form("a_%s",ext.c_str()),"a",-0.2,-2,2.0);
-   RooRealVar b(Form("b_%s",ext.c_str()),"b",0,-2,2.0);
-
-   //RooExponential exp1(Form("exp1_%s",ext.c_str()),Form("exp1_%s",ext.c_str()),x,m1);
-   //RooExponential exp2(Form("exp2_%s",ext.c_str()),Form("exp2_%s",ext.c_str()),x,m2);
-
-   //RooAddPdf *sumexp = new RooAddPdf(Form("doubleExponential_%s",ext.c_str()), Form("doubleExponential_%s",ext.c_str()),RooArgList(exp1,exp2),RooArgList(frac));
-   RooGenericPdf *sumexp = new RooGenericPdf(Form("doubleExponential_%s",ext.c_str()), Form("doubleExponential_%s",ext.c_str()),"TMath::Exp(@1*@0+@2*@0*@0)",RooArgList(x,a,b));
-   ws->import(*sumexp);
-   return sumexp->GetName(); 
-}
-*/
 
 const char * ModelBuilder::doubleexp(RooWorkspace *ws,RooRealVar &x,std::string ext){ 
    ext += catname;
@@ -353,13 +315,9 @@ void ModelBuilder::addSample(std::string name, std::string region, std::string p
  
    TH1F *tmp_hist;
 
-//   std::cout << "VAR - " << varstring << std::endl;
-//   std::cout << "CUT - " << cutstring << std::endl;
-//   std::cout << "W   - " << weightname << std::endl;
-
    if (! fIn->Get(name.c_str())){
-   	std::cout << Form("Error, no tree %s found in %s", name.c_str(), fIn->GetName()) << std::endl;
-	assert(0);
+       std::cout << Form("Error, no tree %s found in %s", name.c_str(), fIn->GetName()) << std::endl;
+       assert(0);
    }
 
    // This is needed to make all things into a Dataset (for the fitting)
@@ -372,27 +330,25 @@ void ModelBuilder::addSample(std::string name, std::string region, std::string p
    RooArgSet treevariables(*var,*weight);
    // List all branches in the tree and add them as variables 
    TObjArray *branches = (TObjArray*) ((TTree*)fIn->Get(name.c_str()))->GetListOfBranches();
-//   branches->Print();
    TIter next(branches); TBranch *br;
    while ( (br = (TBranch*)next()) ){
-	const char *brname = br->GetName();
-	if ( std::strcmp(brname,weightname.c_str())!=0 && std::strcmp(brname,varstring.c_str())!=0 ){
-	  RooRealVar *vartmp = new RooRealVar(brname,brname,0,1); vartmp->removeRange();
-	  std::cout << "Adding variable" << vartmp->GetName() <<  std::endl;
-	  treevariables.add(*vartmp);
-	}
+       const char *brname = br->GetName();
+       if ( std::strcmp(brname,weightname.c_str())!=0 && std::strcmp(brname,varstring.c_str())!=0 ){
+           RooRealVar *vartmp = new RooRealVar(brname,brname,0,1); vartmp->removeRange();
+           //std::cout << "Adding variable" << vartmp->GetName() <<  std::endl;
+           treevariables.add(*vartmp);
+       }
    }
    /**************************************************************************/
    if (! (wspace->genobj("treevars"))) {
-   	//treevariables.SetName("treevars");
-   	wspace->import(treevariables,"treevars");
+       wspace->import(treevariables,"treevars");
    }
    
    std::string lcutstring = cutstring;
    std::map<std::string,std::string>::iterator it_ecut = extracuts.find(region);
    if ( it_ecut != extracuts.end() ) {
-   	lcutstring+=" && "+(*it_ecut).second;
-   	// Also allow only a specific process to be cut 
+       lcutstring+=" && "+(*it_ecut).second;
+       // Also allow only a specific process to be cut 
    }
    it_ecut = extracuts.find(process);
    if ( it_ecut != extracuts.end() ) {	
@@ -401,69 +357,48 @@ void ModelBuilder::addSample(std::string name, std::string region, std::string p
 
    std::cout << " CUT STRING FOR " << process <<  ", in " << region  << " : " << lcutstring.c_str() << std::endl;
    if (is_mc) {
-   	tmp_hist = (TH1F*)generateTemplate(lTmp,(TTree *)fIn->Get(name.c_str()),varstring,weightname,lcutstring,Form("_tmphist%s",catname.c_str()));
-        tmp_data = new RooDataSet("tmpdata","dataset",treevariables,RooFit::Import(*(TTree*)fIn->Get(name.c_str())),RooFit::Cut(lcutstring.c_str()),RooFit::WeightVar(weightname.c_str()));
+       tmp_hist = (TH1F*)generateTemplate(lTmp,(TTree *)fIn->Get(name.c_str()),varstring,weightname,lcutstring,Form("_tmphist%s",catname.c_str()));
+       tmp_data = new RooDataSet("tmpdata","dataset",treevariables,RooFit::Import(*(TTree*)fIn->Get(name.c_str())),RooFit::Cut(lcutstring.c_str()),RooFit::WeightVar(weightname.c_str()));
    } else {
-   	tmp_hist = (TH1F*)generateTemplate(lTmp,(TTree *)fIn->Get(name.c_str()),varstring,"",lcutstring,Form("_tmphist%s",catname.c_str()));
-   	tmp_data = new RooDataSet("tmpdata","dataset",treevariables,RooFit::Import(*(TTree*)fIn->Get(name.c_str())),RooFit::Cut(lcutstring.c_str()));
+       tmp_hist = (TH1F*)generateTemplate(lTmp,(TTree *)fIn->Get(name.c_str()),varstring,"",lcutstring,Form("_tmphist%s",catname.c_str()));
+       tmp_data = new RooDataSet("tmpdata","dataset",treevariables,RooFit::Import(*(TTree*)fIn->Get(name.c_str())),RooFit::Cut(lcutstring.c_str()));
    }
-
+   
    std::map<std::string,ControlRegion>::iterator it_sample = v_samples.find(region);
    
    int type;
    if (!is_mc) type=0;
    else if (is_signal) type=-1;
    else type=1;
-
+   
    TString tRegion = region;
-   //tRegion.ReplaceAll("_Met","");
    std::string pRegion = tRegion.Data();
    if (it_sample!=v_samples.end()) {
-
-     bool proc_exists = has_process((*it_sample).second,process);
-
-     if (proc_exists){
-        save_hists[pRegion+std::string("_")+process]->Add(tmp_hist);
-	save_datas[pRegion+std::string("_")+process]->append(*tmp_data);
-	//((TH1F*)fOut->Get(Form("%s_%s",region.c_str(),process.c_str())))->Add(tmp_hist);
-	std::cout << "Adding to existing sample -- " <<pRegion+std::string("_")+process << " -> " <<  name.c_str() << ", dataset=" << tmp_data->sumEntries()  << " histogram=" <<tmp_hist->Integral() << std::endl; 
-     } else {
-     	//std::cout << "CREATE NEW PROCESS" << process << ", sample" << name << std::endl;
-   	tmp_hist->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
-	tmp_data->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
-	//fOut->WriteTObject(tmp_hist);
-	save_hists[pRegion+std::string("_")+process] = tmp_hist;
-	save_datas[pRegion+std::string("_")+process] = tmp_data;
-
-	((*it_sample).second).procs.push_back(std::pair<std::string,int> (process,type));
-
-     }
+       bool proc_exists = has_process((*it_sample).second,process);
+       if (proc_exists){
+           save_hists[pRegion+std::string("_")+process]->Add(tmp_hist);
+           save_datas[pRegion+std::string("_")+process]->append(*tmp_data);
+           std::cout << "Adding to existing sample -- " <<pRegion+std::string("_")+process << " -> " <<  name.c_str() << ", dataset=" << tmp_data->sumEntries()  << " histogram=" <<tmp_hist->Integral() << std::endl; 
+       } else {
+           tmp_hist->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
+           tmp_data->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
+           save_hists[pRegion+std::string("_")+process] = tmp_hist;
+           save_datas[pRegion+std::string("_")+process] = tmp_data;   
+           ((*it_sample).second).procs.push_back(std::pair<std::string,int> (process,type));
+         
+       }
    }
    else {
-	ControlRegion cregion;
-	cregion.name = region;
-	cregion.procs.push_back(std::pair<std::string,int> (process,type));
-        v_samples[region] = cregion;
-
-   	tmp_hist->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
-	save_hists.insert(std::pair<std::string,TH1F*> (pRegion+std::string("_")+process,tmp_hist));
-
-   	tmp_data->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
-	save_datas.insert(std::pair<std::string,RooDataSet*> (pRegion+std::string("_")+process,tmp_data));
-	//fOut->WriteTObject(tmp_hist);
+       ControlRegion cregion;
+       cregion.name = region;
+       cregion.procs.push_back(std::pair<std::string,int> (process,type));
+       v_samples[region] = cregion;
+       
+       tmp_hist->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
+       save_hists.insert(std::pair<std::string,TH1F*> (pRegion+std::string("_")+process,tmp_hist));
+       
+       tmp_data->SetName(Form("%s_%s",pRegion.c_str(),process.c_str()));
+       save_datas.insert(std::pair<std::string,RooDataSet*> (pRegion+std::string("_")+process,tmp_data));
    } 
-
-}
-
-
-/*
-
-
-void ModelBuilder::buildAndFitModels(std::string region){
-
-   // Loop though processes for this region
-   // Make 3 datasets, signal, bkg and data
    
-
 }
-*/

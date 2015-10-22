@@ -8,17 +8,17 @@ model = "zjets"
 # My Function. Just to put all of the complicated part into one function
 def my_function(_wspace,_fin,_fOut,nam,diag):
 
-  metname = "mvamet"    # Observable variable name 
-  gvptname = "genVpt"    # Weights are in generator pT
-  wvarname= "weight"
+  metname = "met"    # Observable variable name 
+  gvptname = "genBos_pt"    # Weights are in generator pT
+  wvarname= "scale"
   target     = _fin.Get("signal_zjets")      # define monimal (MC) of which process this config will model
-  controlmc    = _fin.Get("dimuon_zll")  # defines in / out acceptance
+  controlmc    = _fin.Get("Zmm_zll")  # defines in / out acceptance
 
-  controlmc_photon   = _fin.Get("photon_gjet")  # defines in / out acceptance
+  controlmc_photon   = _fin.Get("gjets_gjets")  # defines in / out acceptance
   controlmc_wlv      = _fin.Get("signal_wjets")  # defines in / out acceptance
 
-  _gjet_mcname 	      = "photon_gjet"
-  GJet = _fin.Get("photon_gjet")
+  _gjet_mcname 	      = "gjets_gjets"
+  GJet = _fin.Get("gjets_gjets")
 
   fkFactor = r.TFile.Open("files/Photon_Z_NLO_kfactors_w80pcorr.root")
   nlo_pho = fkFactor.Get("pho_NLO_LO")
@@ -63,7 +63,7 @@ def my_function(_wspace,_fin,_fOut,nam,diag):
   PhotonOverZ.Divide(Zvv)
   PhotonOverZ.Multiply(target)
   PhotonOverZ.Divide(GJet)
-  diag.generateWeightedDataset("photon_gjet_nlo",PhotonOverZ,wvarname,metname,_wspace,"photon_gjet")
+  diag.generateWeightedDataset("photon_gjet_nlo",PhotonOverZ,wvarname,metname,_wspace,"gjets_gjets")
 
   PhotonSpectrum = Pho.Clone(); PhotonSpectrum.SetName("photon_spectrum_%s_"%nam)
   ZvvSpectrum 	 = Zvv.Clone(); ZvvSpectrum.SetName("zvv_spectrum_%s_"%nam)
@@ -230,11 +230,11 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # special datasets/histograms representing these and systematic effects 
   # example below for creating shape systematic for photon which is just every bin up/down 30% 
 
-  metname = "mvamet"    # Observable variable name 
+  metname = "met"    # Observable variable name 
   targetmc     = _fin.Get("signal_zjets")      # define monimal (MC) of which process this config will model
-  controlmc    = _fin.Get("dimuon_zll")  # defines in / out acceptance
+  controlmc    = _fin.Get("Zmm_zll")  # defines in / out acceptance
 
-  controlmc_photon   = _fin.Get("photon_gjet")  # defines in / out acceptance
+  controlmc_photon   = _fin.Get("gjets_gjets")  # defines in / out acceptance
   controlmc_wlv      = _fin.Get("signal_wjets")  # defines in / out acceptance
 
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
