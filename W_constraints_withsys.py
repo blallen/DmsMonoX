@@ -48,21 +48,23 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # for shapes use add_nuisance_shape with (name,_fOut)
   # note, the code will LOOK for something called NOMINAL_name_Up and NOMINAL_name_Down, where NOMINAL=WScales.GetName()
   # these must be created and writted to the same dirctory as the nominal (fDir)
+  CRs[0].add_nuisance("pdf_CT10",0.006)
+  CRs[0].add_nuisance("CMS_eff_m",0.01)
 
   # Statistical uncertainties too!, one per bin 
-#  for b in range(targetmc.GetNbinsX()):
-#    err = WScales.GetBinError(b+1)
-#    if not WScales.GetBinContent(b+1)>0: continue 
-#    relerr = err/WScales.GetBinContent(b+1)
-#    if relerr<0.01: continue
-#    byb_u = WScales.Clone(); byb_u.SetName("wmn_weights_%s_%s_stat_error_%s_bin%d_Up"%(cid,cid,"singlemuonCR",b))
-#    byb_u.SetBinContent(b+1,WScales.GetBinContent(b+1)+err)
-#    byb_d = WScales.Clone(); byb_d.SetName("wmn_weights_%s_%s_stat_error_%s_bin%d_Down"%(cid,cid,"singlemuonCR",b))
-#    byb_d.SetBinContent(b+1,WScales.GetBinContent(b+1)-err)
-#    _fOut.WriteTObject(byb_u)
-#    _fOut.WriteTObject(byb_d)
-#    print "Adding an error -- ", byb_u.GetName(),err
-#    CRs[0].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"singlemuonCR",b),_fOut)
+  for b in range(targetmc.GetNbinsX()):
+    err = WScales.GetBinError(b+1)
+    if not WScales.GetBinContent(b+1)>0: continue 
+    relerr = err/WScales.GetBinContent(b+1)
+    if relerr<0.01: continue
+    byb_u = WScales.Clone(); byb_u.SetName("wmn_weights_%s_%s_stat_error_%s_bin%d_Up"%(cid,cid,"singlemuonCR",b))
+    byb_u.SetBinContent(b+1,WScales.GetBinContent(b+1)+err)
+    byb_d = WScales.Clone(); byb_d.SetName("wmn_weights_%s_%s_stat_error_%s_bin%d_Down"%(cid,cid,"singlemuonCR",b))
+    byb_d.SetBinContent(b+1,WScales.GetBinContent(b+1)-err)
+    _fOut.WriteTObject(byb_u)
+    _fOut.WriteTObject(byb_d)
+    print "Adding an error -- ", byb_u.GetName(),err
+    CRs[0].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"singlemuonCR",b),_fOut)
   #######################################################################################################
 
 

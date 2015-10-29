@@ -1,6 +1,11 @@
 import ROOT as r
 import array, sys
 
+r.gSystem.AddIncludePath("-I$CMSSW_BASE/src/ ");
+r.gSystem.AddIncludePath("-I$ROOFITSYS/include");
+r.gSystem.Load("libRooFit.so")
+r.gSystem.Load("libRooFitCore.so")
+
 # Configurations Read in from Separate .py files
 sys.path.append("configs")
 #import categories_config_vtag as x
@@ -33,6 +38,7 @@ for cat_id,cat in enumerate(x.categories):
 
   # create a template histogram from bins
   bins = cat["bins"]
+  print "ZEYNEP", bins, len(bins)-1, array.array('d',bins)
   histo_base = r.TH1F("base_%d"%cat_id,"base"
         ,len(bins)-1
 	,array.array('d',bins))

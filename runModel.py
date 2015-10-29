@@ -17,6 +17,17 @@ from counting_experiment import *
 from convert import * 
 
 import ROOT as r 
+
+ROOT.gSystem.AddIncludePath("-I$CMSSW_BASE/src/ ");
+ROOT.gSystem.AddIncludePath("-I$ROOFITSYS/include");
+#ROOT.gSystem.AddIncludePath("-I$ROOSYS/include");
+
+ROOT.gSystem.Load("libRooFit.so")
+ROOT.gSystem.Load("libRooFitCore.so")
+
+#ROOT.gSystem.AddIncludePath("-I$ROOTSYS/include -I$ROOFITSYS/include");
+#ROOT.gSystem.Load("libRooFit");
+
 r.gROOT.SetBatch(1)
 r.gROOT.ProcessLine(".L diagonalizer.cc+")
 from ROOT import diagonalizer
