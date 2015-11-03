@@ -46,6 +46,7 @@ obsargset   = r.RooArgSet(out_ws.var("observed"),out_ws.cat("bin_number"))
 cmb_categories = []
 
 for crd,crn in enumerate(controlregions_def):
+	sys.path.append("")
 	x = __import__(crn)
         for cid,cn in enumerate(categories): 
 		_fDir = _fOut.mkdir("%s_category_%s"%(crn,cn))

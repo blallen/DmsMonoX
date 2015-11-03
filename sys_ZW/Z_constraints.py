@@ -26,7 +26,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
   # transfer factors (named with extention _sysname_Up/Down
-  ZmmScales = targetmc.Clone(); ZmmScales.SetName("zmm_weights_%s"%cid)
+  ZmmScales = target.Clone(); ZmmScales.SetName("zmm_weights_%s"%cid)
   ZmmScales.Divide(controlmc)
   _fOut.WriteTObject(ZmmScales)  # always write out to the directory 
 
@@ -36,8 +36,8 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   #######################################################################################################
 
   _bins = []  # take bins from some histogram, can choose anything but this is easy 
-  for b in range(targetmc.GetNbinsX()+1):
-    _bins.append(targetmc.GetBinLowEdge(b+1))
+  for b in range(target.GetNbinsX()+1):
+    _bins.append(target.GetBinLowEdge(b+1))
 
   # Here is the important bit which "Builds" the control region, make a list of control regions which 
   # are constraining this process, each "Channel" is created with ...
@@ -58,7 +58,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # these must be created and writted to the same dirctory as the nominal (fDir)
 
   # Bin by bin nuisances to cover statistical uncertainties ...
-  for b in range(targetmc.GetNbinsX()):
+  for b in range(target.GetNbinsX()):
     err = PhotonScales.GetBinError(b+1)
     if not PhotonScales.GetBinContent(b+1)>0: continue 
     relerr = err/PhotonScales.GetBinContent(b+1)
@@ -72,7 +72,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
     print "Adding an error -- ", byb_u.GetName(),err
     CRs[0].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"photonCR",b),_fOut)
 
-  for b in range(targetmc.GetNbinsX()):
+  for b in range(target.GetNbinsX()):
     err = ZmmScales.GetBinError(b+1)
     if not ZmmScales.GetBinContent(b+1)>0: continue 
     relerr = err/ZmmScales.GetBinContent(b+1)
@@ -80,7 +80,10 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
     byb_u = ZmmScales.Clone(); byb_u.SetName("zmm_weights_%s_%s_stat_error_%s_bin%d_Up"%(cid,cid,"dimuonCR",b))
     byb_u.SetBinContent(b+1,ZmmScales.GetBinContent(b+1)+err)
     byb_d = ZmmScales.Clone(); byb_d.SetName("zmm_weights_%s_%s_stat_error_%s_bin%d_Down"%(cid,cid,"dimuonCR",b))
-    byb_d.SetBinContent(b+1,ZmmScales.GetBinContent(b+1)-err)
+    if (ZmmScales.GetBinContent(b+1)-err > 0):
+      byb_d.SetBinContent(b+1,ZmmScales.GetBinContent(b+1)-err)
+    else:
+      byb_d.SetBinContent(b+1,1)
     _fOut.WriteTObject(byb_u)
     _fOut.WriteTObject(byb_d)
     print "Adding an error -- ", byb_u.GetName(),err
@@ -95,7 +98,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   #######################################################################################################
 
 
-  cat = Category(model,cid,nam,_fin,_fOut,_wspace,out_ws,_bins,metname,targetmc.GetName(),CRs,diag)
+  cat = Category(model,cid,nam,_fin,_fOut,_wspace,out_ws,_bins,metname,target.GetName(),CRs,diag)
   # Return of course
   return cat
 
@@ -146,6 +149,8 @@ def my_function(_wspace,_fin,_fOut,nam,diag):
   PhotonOverZ.Divide(Zvv)
   PhotonOverZ.Multiply(target)
   PhotonOverZ.Divide(GJet)
+
+  # Would like to get rid of this if wvarname is set to 1 at the moment.
   diag.generateWeightedDataset("photon_gjet_nlo",PhotonOverZ,wvarname,metname,_wspace,"gjets_gjets")
 
   PhotonSpectrum = Pho.Clone(); PhotonSpectrum.SetName("photon_spectrum_%s_"%nam)
@@ -169,7 +174,7 @@ def my_function(_wspace,_fin,_fOut,nam,diag):
 
   Zvv_scaleDown = target.Clone(); Zvv_scaleUp.SetName("photon_weights_nom_scaleDown_%s"%nam)
   for b in range(Zvv_scaleDown.GetNbinsX()):Zvv_scaleDown.SetBinContent(b+1,0)
-  diag.generateWeightedTemplate(Zvv_scaleUp,nlo_zjt_scaleDown,gvptname,metname,_wspace.data("signal_zjets"))
+  diag.generateWeightedTemplate(Zvv_scaleDown,nlo_zjt_scaleDown,gvptname,metname,_wspace.data("signal_zjets"))
 
   Pho_pdfUp = target.Clone(); Pho_pdfUp.SetName("photon_weights_denom_pdfUp_%s"%nam)
   for b in range(Pho_pdfUp.GetNbinsX()): Pho_pdfUp.SetBinContent(b+1,0)
@@ -185,7 +190,7 @@ def my_function(_wspace,_fin,_fOut,nam,diag):
 
   Zvv_pdfDown = target.Clone(); Zvv_pdfUp.SetName("photon_weights_nom_pdfDown_%s"%nam)
   for b in range(Zvv_pdfDown.GetNbinsX()):Zvv_pdfDown.SetBinContent(b+1,0)
-  diag.generateWeightedTemplate(Zvv_pdfUp,nlo_zjt_pdfDown,gvptname,metname,_wspace.data("signal_zjets"))
+  diag.generateWeightedTemplate(Zvv_pdfDown,nlo_zjt_pdfDown,gvptname,metname,_wspace.data("signal_zjets"))
 
   #################################################################################################################
 
@@ -198,7 +203,6 @@ def my_function(_wspace,_fin,_fOut,nam,diag):
   Zvv_pdfUp.Divide(Pho_pdfUp); 	        Zvv_pdfUp.SetName("photon_weights_%s_pdf_Up"%nam);_fOut.WriteTObject(Zvv_pdfUp)
   Zvv_pdfDown.Divide(Pho_pdfDown); 	Zvv_pdfDown.SetName("photon_weights_%s_pdf_Down"%nam);_fOut.WriteTObject(Zvv_pdfDown)
   
-
   PhotonScales = Zvv.Clone()
   _fOut.WriteTObject(PhotonScales)
 
