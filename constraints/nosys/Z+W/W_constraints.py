@@ -9,13 +9,12 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   _fin    = _f.Get("category_%s"%cid)
   _wspace = _fin.Get("wspace_%s"%cid)
 
-
   # ############################ USER DEFINED ###########################################################
   # First define the nominal transfer factors (histograms of signal/control, usually MC 
   # note there are many tools available inside include/diagonalize.h for you to make 
   # special datasets/histograms representing these and systematic effects 
   # but for now this is just kept simple 
-  processName  = "WJets" # Give a name of the process being modelled
+
   metname      = "met"    # Observable variable name 
   targetmc     = _fin.Get("signal_wjets")      # define monimal (MC) of which process this config will model
   controlmc    = _fin.Get("Wmn_wjets")  # defines in / out acceptance
@@ -48,8 +47,6 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # for shapes use add_nuisance_shape with (name,_fOut)
   # note, the code will LOOK for something called NOMINAL_name_Up and NOMINAL_name_Down, where NOMINAL=WScales.GetName()
   # these must be created and writted to the same dirctory as the nominal (fDir)
-
-  CRs[0].add_nuisance("CMS_eff_m",0.01)
 
   # Statistical uncertainties too!, one per bin 
   for b in range(targetmc.GetNbinsX()):
