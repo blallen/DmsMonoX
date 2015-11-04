@@ -7,7 +7,7 @@ out_file_name = 'mono-x.root'
 #bins = range(200,1100,50)
 
 bins = [200.0, 250.0, 300.0, 350.0, 400.0, 500.0, 600.0, 1000.0]
-
+# bins = [200.0, 1000.0]
 
 # Define each of the categories in a dictionary of the following form .. 
 #	'name' : the category name 
