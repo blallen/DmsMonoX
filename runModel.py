@@ -2,18 +2,10 @@ import sys
 import os
 #########################################################################################
 # Setup the basics ----> USER DEFINED SECTION HERE ------------------------------------//
-path = ""
-try:
-	print sys.argv[1]
-except:
-	print 'No path provided'
-else:
-	path = sys.argv[1]
-fOutName = os.path.join(path,"combined_model.root")  # --> Output file
-fName    = "mono-x.root"  # --> input file (i.e output from previous)
+fOutName = "combined_model.root"  # --> Output file
+fName    = os.path.join(os.environ['CMSSW_BASE'],'src/DmsMonoX',"mono-x.root")  # --> input file (i.e output from previous)
 categories = ["monojet"] # --> Should be labeled as in original config 
 controlregions_def = ["Z_constraints","W_constraints"] # --> configuration configs for control region fits. 
-# controlregions_def = ["Z_constraints"] # --> configuration configs for control region fits. 
 # Note if one conrol region def depends on another (i,e if setDependant() is called) it must come AFTER its 
 # the one it depends on in this list!
 #--------------------------------------------------------------------------------------//
@@ -39,7 +31,8 @@ ROOT.gSystem.Load("libRooFitCore.so")
 #ROOT.gSystem.Load("libRooFit");
 
 r.gROOT.SetBatch(1)
-r.gROOT.ProcessLine(".L diagonalizer.cc+")
+diagPath = os.path.join(os.environ['CMSSW_BASE'],'src/DmsMonoX','diagonalizer.cc')
+r.gROOT.ProcessLine(".L "+diagPath+"+")
 from ROOT import diagonalizer
 
 _fOut 	   = r.TFile(fOutName,"RECREATE") 
@@ -56,7 +49,7 @@ obsargset   = r.RooArgSet(out_ws.var("observed"),out_ws.cat("bin_number"))
 cmb_categories = []
 
 for crd,crn in enumerate(controlregions_def):
-	sys.path.append(path)
+	sys.path.append(os.getcwd())
 	x = __import__(crn)
         for cid,cn in enumerate(categories): 
 		_fDir = _fOut.mkdir("%s_category_%s"%(crn,cn))
