@@ -20,6 +20,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   targetmc           = _fin.Get("signal_zjets")      # define monimal (MC) of which process this config will model
   controlmc          = _fin.Get("Zmm_zll")           # defines Zmm MC of which process will be controlled by
   controlmc_photon   = _fin.Get("gjets_gjets")       # defines Gjets MC of which process will be controlled by
+  controlmc_wmn      = _fin.Get("Wmn_wjets")           # defines Wmn MC of which process will be controlled by
 
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
   # transfer factors (named with extention _sysname_Up/Down
@@ -30,6 +31,10 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   PhotonScales = targetmc.Clone(); PhotonScales.SetName("photon_weights_%s"%cid)
   PhotonScales.Divide(controlmc_photon)
   _fOut.WriteTObject(PhotonScales)  # always write out to the directory       
+
+  WmnScales = targetmc.Clone(); WmnScales.SetName("wmn_weights_%s"%cid)
+  WmnScales.Divide(controlmc_wmn)
+  _fOut.WriteTObject(WmnScales)  # always write out to the directory       
 
   #######################################################################################################
 
@@ -44,8 +49,9 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # TRANSFERFACTORS are what is created above, eg WScales
 
   CRs = [
-   Channel("photon",_wspace,out_ws,cid+'_'+model,PhotonScales) 
-  ,Channel("dimuon",_wspace,out_ws,cid+'_'+model,ZmmScales)
+    Channel("photon",_wspace,out_ws,cid+'_'+model,PhotonScales) 
+    ,Channel("dimuon",_wspace,out_ws,cid+'_'+model,ZmmScales)
+    ,Channel("singlemuon",_wspace,out_ws,cid+'_'+model,WmnScales)
   #,Channel("wjetssignal",_wspace,out_ws,cid+'_'+model,WZScales)
   ]
 
@@ -87,6 +93,24 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
     _fOut.WriteTObject(byb_d)
     print "Adding an error -- ", byb_u.GetName(),err
     CRs[1].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"dimuonCR",b),_fOut)
+
+  for b in range(targetmc.GetNbinsX()):
+    err = WmnScales.GetBinError(b+1)
+    #print "Is there a negative error? ", err, WmnScales.GetBinContent(b+1)-err, WmnScales.GetBinContent(b+1)+err 
+    if not WmnScales.GetBinContent(b+1)>0: continue 
+    relerr = err/WmnScales.GetBinContent(b+1)
+    if relerr<0.01: continue
+    byb_u = WmnScales.Clone(); byb_u.SetName("wmn_weights_%s_%s_stat_error_%s_bin%d_Up"%(cid,cid,"singlemuonCR",b))
+    byb_u.SetBinContent(b+1,WmnScales.GetBinContent(b+1)+err)    
+    byb_d = WmnScales.Clone(); byb_d.SetName("wmn_weights_%s_%s_stat_error_%s_bin%d_Down"%(cid,cid,"singlemuonCR",b))
+    if (WmnScales.GetBinContent(b+1)-err > 0):
+      byb_d.SetBinContent(b+1,WmnScales.GetBinContent(b+1)-err)
+    else:
+      byb_d.SetBinContent(b+1,1)
+    _fOut.WriteTObject(byb_u)
+    _fOut.WriteTObject(byb_d)
+    print "Adding an error -- ", byb_u.GetName(),err
+    CRs[2].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"singlemuonCR",b),_fOut)
 
   #######################################################################################################
   
