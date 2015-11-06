@@ -19,7 +19,7 @@ def plotPreFitPostFit(region):
 
   print h_data.Integral()
 
-  channel = {"singlemuon":"1", "dimuon":"2", "gjets":"3", "signal":"3"}
+  channel = {"singlemuon":"1", "dimuon":"2", "gjets":"3", "signal":"4"}
   mainbkg = {"singlemuon":"wjets", "dimuon":"zll", "gjets":"gjets", "signal":"zjets"}
   
   processes = [

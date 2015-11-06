@@ -25,6 +25,14 @@ process      diboson       top           wjets         qcd           diboson    
 process      2             4             5             6             2             3             4             0             1             2             3             4             5             6             7           
 rate        -1            -1             1.0000       -1            -1             1.0000       -1             -1            -1            -1             -1           -1             1.0000       -1             1.000
 ----------------------------------------------------------------------------------------------------------------------------------
+CMS_eff_m param 0.0 1
+ewk_W_monojet_bin0 param 0.0 1
+ewk_W_monojet_bin1 param 0.0 1
+ewk_W_monojet_bin2 param 0.0 1
+ewk_W_monojet_bin3 param 0.0 1
+ewk_W_monojet_bin4 param 0.0 1
+ewk_W_monojet_bin5 param 0.0 1
+ewk_W_monojet_bin6 param 0.0 1
 monojet_stat_error_dimuonCR_bin0 param 0.0 1
 monojet_stat_error_dimuonCR_bin1 param 0.0 1
 monojet_stat_error_dimuonCR_bin2 param 0.0 1

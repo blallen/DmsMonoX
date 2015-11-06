@@ -18,7 +18,6 @@ shapes gjets     ch3       combined_model.root combinedws:monojet_photon_zjets_m
 shapes *         ch4       combined_model.root combinedws:monojet_signal_$PROCESS
 shapes data_obs  ch4       combined_model.root combinedws:monojet_signal_data
 shapes zjets     ch4       combined_model.root combinedws:monojet_signal_zjets_model
-# shapes wjets     ch4       combined_model.root combinedws:monojet_signal_wjets_model
 shapes wjets     ch4	   combined_model.root combinedws:monojet_wjetssignal_zjets_model
 
 ----------------------------------------------------------------------------------------------------------------------------------
