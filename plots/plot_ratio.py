@@ -174,7 +174,7 @@ def plot_ratio(process,category):
     
     gPad.RedrawAxis()
 
-    folder ="/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin"
+    folder ="/home/ballen/public_html/cmsplots/monophoton/combinedfit/shape"
 
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".pdf")
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".png")

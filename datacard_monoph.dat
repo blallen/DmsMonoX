@@ -24,35 +24,46 @@ shapes wg                        monophoton_monomu  combined_model.root combined
 bin          monophoton_signal  monophoton_dimu  monophoton_diel  monophoton_monomu  monophoton_monoel
 observation  -1.0               -1.0             -1.0             -1.0                 -1.0               
 ----------------------------------------------------------------------------------------------------------------------------------
-bin          monophoton_signal   monophoton_signal   monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_dimu  monophoton_dimu  monophoton_dimu  monophoton_dimu  monophoton_diel  monophoton_diel  monophoton_diel  monophoton_diel  monophoton_monoel  monophoton_monoel   monophoton_monoel  monophoton_monomu  monophoton_monomu  monophoton_monomu  monophoton_monoel  monophoton_monomu 
-process      dmv-500-1           efake               gjets              halo               hfake              minor              vvg                wg                 zg                 top              vvg              zg               zjets            top              vvg              zg               zjets            top                vvg              	 wg                 top                vvg                wg	  	     zgamm              zgamm  
-process      -1                   1                   2                  3                  4                  5                  6                  7                  8                 9                6                8                10               9                6                8                10               9                  6                   7                  9                  6                  7	  	     11                 11     
-rate         -1                   -1                  -1                 -1                 -1                 -1                 -1                 1.0                1.0                -1               -1               1.0              -1               -1               -1               1.0              -1               -1                 -1                 1.0                -1                 -1                 1.0	  	     -1                 -1     
+bin                     monophoton_signal   monophoton_signal   monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_dimu  monophoton_dimu  monophoton_dimu  monophoton_dimu  monophoton_diel  monophoton_diel  monophoton_diel  monophoton_diel  monophoton_monoel  monophoton_monoel   monophoton_monoel  monophoton_monomu  monophoton_monomu  monophoton_monomu  monophoton_monoel  monophoton_monomu 
+process                 dmv-500-1           efake               gjets              halo               hfake              minor              vvg                wg                 zg                 top              vvg              zg               zjets            top              vvg              zg               zjets            top                vvg                 wg                 top                vvg                wg	  	     	zgamm              zgamm  
+process      		-1                   1                   2                  3                  4                  5                  6                  7                  8                 9                6                8                10               9                6                8                10               9                  6                   7                  9                  6                  7	  	     	11                 11     
+rate         		-1                   -1                  -1                 -1                 -1                 -1                 -1                 1.0                1.0                -1               -1               1.0              -1               -1               -1               1.0              -1               -1                 -1                 1.0                -1                 -1                 1.0	  	-1                 -1     
 ----------------------------------------------------------------------------------------------------------------------------------																																				  			                  		   
-lumi lnN     1.04                 -                   1.04               -                  -                  1.04               1.04               -                  -                  1.04             1.04             -                1.04             1.04             1.04             -                1.04             1.04                1.04              -                  1.04               1.04               - 	             1.04               1.04
+lumi            lnN     1.04                 -                   1.04               -                  -                  1.04               1.04               -                  -                  1.04             1.04             -                1.04             1.04             1.04             -                1.04             1.04                1.04              -                  1.04               1.04               - 	                1.04               1.04
+gec		lnN	1.030		     -			 1.184		    -		       -		  1.035		     1.123		-		   -		      1.035	       1.123		-		 1.035		  1.035		   1.123	    -		     1.035	      1.035		  1.123		    -		       1.035		  1.123		     -			1.051		   1.051
+jec		lnN	0.997		     -			 0.673		    -		       -		  0.970		     0.990		-		   -		      0.970	       0.990		-		 0.970		  0.970		   0.990	    -		     0.970	      0.970		  0.990		    -		       0.970		  0.990		     -			0.990		   0.990 
+totalPhSF	lnN	1.060		     -			 1.060		    -		       -		  1.060		     1.060		-		   -		      1.060	       1.060		-		 1.060		  1.060		   1.060	    -		     1.060	      1.060		  1.060		    -		       1.060		  1.060		     -		     	1.060		   1.060 
+muonSF		lnN	-		     -			 -		    -		       -		  -		     -			-		   -		      1.02	       1.02		1.02		 1.02		  -		   -		    -		     -		      -			  -		    -		       1.01		  1.01		     1.01		-		   1.01
+eleSF		lnN	-		     -			 -		    -		       -		  -		     -			-		   -		      -		       -		-		 -		  1.04		   1.04		    1.04	     1.04	      1.02		  1.02		    1.02  	       -		  -		     -			1.02		   -
+minorQCD	lnN	-		     -			 1.033		    -		       -		  1.033		     1.033		-		   -		      1.033	       1.033		-		 1.033		  1.033		   1.033	    -		     1.033	      1.033		  1.033		    -		       1.033		  1.033		     -			1.033		   1.033
+minorPDF	lnN	-		     -			 1.096		    -		       -		  1.036		     1.036		-		   -		      1.036	       1.036		-		 1.036		  1.036		   1.036	    -		     1.036	      1.036		  1.036		    -		       1.036		  1.036		     -			1.036		   1.036
+egFakerate      lnN     -                    1.079		 -		    -		       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			  -		    -		       -		  -		     -		     	-		   -
+hfakeTfactor	lnN	-		     -			 -		    -		       1.206		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			  -		    -		       -		  -		     -		     	-		   -
+purity		lnN	-		     -			 -		    -		       1.377		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			  -		    -		       -		  -		     -		     	-		   -
+haloNorm	lnN	-		     -			 -		    1.690	       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			  -		    -		       -		  -		     -		    	-		   -
 ----------------------------------------------------------------------------------------------------------------------------------
-monophoton_stat_error_dimuCR_bin0 param 0.0 1
-monophoton_stat_error_dielCR_bin0 param 0.0 1
-monophoton_stat_error_monomuCR_bin0 param 0.0 1
-monophoton_stat_error_monoelCR_bin0 param 0.0 1
-
 #monophoton_stat_error_dimuCR_bin0 param 0.0 1
-#monophoton_stat_error_dimuCR_bin1 param 0.0 1
-#monophoton_stat_error_dimuCR_bin2 param 0.0 1
-#monophoton_stat_error_dimuCR_bin3 param 0.0 1
-#monophoton_stat_error_dimuCR_bin4 param 0.0 1
 #monophoton_stat_error_dielCR_bin0 param 0.0 1
-#monophoton_stat_error_dielCR_bin1 param 0.0 1
-#monophoton_stat_error_dielCR_bin2 param 0.0 1
-#monophoton_stat_error_dielCR_bin3 param 0.0 1
-#monophoton_stat_error_dielCR_bin4 param 0.0 1
 #monophoton_stat_error_monomuCR_bin0 param 0.0 1
-#monophoton_stat_error_monomuCR_bin1 param 0.0 1
-#monophoton_stat_error_monomuCR_bin2 param 0.0 1
-#monophoton_stat_error_monomuCR_bin3 param 0.0 1
-#monophoton_stat_error_monomuCR_bin4 param 0.0 1
 #monophoton_stat_error_monoelCR_bin0 param 0.0 1
-#monophoton_stat_error_monoelCR_bin1 param 0.0 1
-#monophoton_stat_error_monoelCR_bin2 param 0.0 1
-#monophoton_stat_error_monoelCR_bin3 param 0.0 1
-#monophoton_stat_error_monoelCR_bin4 param 0.0 1
+
+monophoton_stat_error_dimuCR_bin0 param 0.0 1
+monophoton_stat_error_dimuCR_bin1 param 0.0 1
+monophoton_stat_error_dimuCR_bin2 param 0.0 1
+monophoton_stat_error_dimuCR_bin3 param 0.0 1
+monophoton_stat_error_dimuCR_bin4 param 0.0 1
+monophoton_stat_error_dielCR_bin0 param 0.0 1
+monophoton_stat_error_dielCR_bin1 param 0.0 1
+monophoton_stat_error_dielCR_bin2 param 0.0 1
+monophoton_stat_error_dielCR_bin3 param 0.0 1
+monophoton_stat_error_dielCR_bin4 param 0.0 1
+monophoton_stat_error_monomuCR_bin0 param 0.0 1
+monophoton_stat_error_monomuCR_bin1 param 0.0 1
+monophoton_stat_error_monomuCR_bin2 param 0.0 1
+monophoton_stat_error_monomuCR_bin3 param 0.0 1
+monophoton_stat_error_monomuCR_bin4 param 0.0 1
+monophoton_stat_error_monoelCR_bin0 param 0.0 1
+monophoton_stat_error_monoelCR_bin1 param 0.0 1
+monophoton_stat_error_monoelCR_bin2 param 0.0 1
+monophoton_stat_error_monoelCR_bin3 param 0.0 1
+monophoton_stat_error_monoelCR_bin4 param 0.0 1
