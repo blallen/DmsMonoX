@@ -11,7 +11,7 @@ new_dic = defaultdict(dict)
 
 def plotPreFitPostFit(region,category,sb=False):
 
-  datalab = {"singlemuon":"singlemu", "dimuon":"dimu", "signal":"signal", "singleelectron":"singleel", "dielectron":"diel"}
+  datalab = {"monomu":"monomu", "dimu":"dimu", "signal":"signal", "monoel":"monoel", "diel":"diel"}
   
   f_mlfit = TFile('mlfit.root','READ')
 
@@ -24,40 +24,38 @@ def plotPreFitPostFit(region,category,sb=False):
   
   b_width = [50,50,50,50,100,100,300,400,0]
 
-  channel = {"singlemuon":category+"_singlemu", "dimuon":category+"_dimu", "signal":category+"_signal", "singleelectron":category+"_singleel", "dielectron":category+"_diel"}
-  mainbkg = {"singlemuon":"wg", "dimuon":"zg", "signal":"zg", "singleelectron":"wg", "dielectron":"zg"}
+  channel = {"monomu":category+"_monomu", "dimu":category+"_dimu", "signal":category+"_signal", "monoel":category+"_monoel", "diel":category+"_diel"}
+  mainbkg = {"monomu":"wg", "dimu":"zg", "signal":"zg", "monoel":"wg", "diel":"zg"}
   
 
   processes = [
-    'tt',
-    'vvg',
-    'zjets',
-    'gjets',
     'zgamm',
-    'top',  
-    'halo',
-    'efake',
-    'hfake',
+    'zjets',
+    'top',
     'minor',
-    'zg',
-    'wg'
+    'gjets',
+    'vvg',
+    'halo',
+    'hfake',
+    'efake',
+    'wg',
+    'zg'
     ]
 
 
  
   colors = {
-    'tt':"#4897D8",
-    'vvg'  :"#9A9EAB",
-    'zg'    :"#F1F1F2",
-    'wg'    :"#CF3721",
-    'gjets'    :"#000000",
-    'zgamm'    :"#9A9EAB",
-    'top'    :"#FAAF08",
-    'halo'   :"#258039",
-    'efake'  :"#258038",
-    'hfake'  :"#258037",
-    'minor'  :"#258036",
-    'zjets'  :"#258035",
+    'zg'     :"#99ffaa",
+    'wg'     :"#99eeff",
+    'efake'  :"#ffee99",
+    'hfake'  :"#bbaaff",
+    'halo'   :"#ff9933",
+    'vvg'    :"#ff4499",
+    'gjets'  :"#ffaacc",
+    'minor'  :"#5544ff",
+    'top'    :"#5544ff",
+    'zjets'  :"#bb66ff",
+    'zgamm'  :"#cc9911",
   }
 
   binLowE = []
@@ -267,39 +265,41 @@ def plotPreFitPostFit(region,category,sb=False):
     #print "$"+str(round(h_data.GetBinContent(i),2))+"$        " , " & ",
 
 
-  if region == "singlemuon":
+  if region == "monomu":
     #legname = "W #rightarrow #mu#nu"
     legname = "single-muon C.R."
-  if region == "dimuon":
+  if region == "dimu":
     #legname = "Z #rightarrow #mu#mu"
     legname = "di-muon C.R."
   if region == "gjets":
     legname = "#gamma + jets C.R."
-  if region == "singleelectron":
+  if region == "monoel":
     #legname = "W #rightarrow e#nu"
     legname = "single-electron C.R."
-  if region == "dielectron":
+  if region == "diel":
     #legname = "Z #rightarrow ee"
     legname = "di-electron C.R."
 
   
   #legend.SetTextSize(0.04)
   if region in 'signal' :
-    legend = TLegend(.6,.55,.90,.90)
+    legend = TLegend(.625,.55,.925,.90)
     legend.AddEntry(h_data, "Data", "elp")    
-    #legend.AddEntry(h_postfit['zjets'], "Z #rightarrow #nu#nu", "f")
-    #legend.AddEntry(h_postfit['wjets'], "W #rightarrow l#nu", "f")
-    #legend.AddEntry(h_postfit['diboson'], "WW/ZZ/WZ", "f")
-    #legend.AddEntry(h_postfit['top'], "Top Quark", "f")
-    #legend.AddEntry(h_postfit['gjets'], "Z/#gamma #rightarrow ll, #gamma+jets", "f")
-    #legend.AddEntry(h_postfit['qcd'], "QCD", "f")
-    #legend.AddEntry(h_all_postfit, "Expected (post-fit)", "l")
-    #legend.AddEntry(h_all_prefit, "Expected (pre-fit) ", "l")
+    legend.AddEntry(h_postfit['zg'], "Z #rightarrow #nu#nu + #gamma", "f")
+    legend.AddEntry(h_postfit['wg'], "W #rightarrow l#nu + #gamma", "f")
+    legend.AddEntry(h_postfit['efake'], "Electron fakes", "f")
+    legend.AddEntry(h_postfit['hfake'], "Hadron fakes", "f")
+    legend.AddEntry(h_postfit['halo'], "Beam halo", "f")
+    legend.AddEntry(h_postfit['vvg'], "VV#gamma", "f")
+    legend.AddEntry(h_postfit['gjets'], "#gamma+jets", "f")
+    legend.AddEntry(h_postfit['minor'], "Minor SM", "f")
+    # legend.AddEntry(h_all_postfit, "Expected (post-fit)", "l")
+    # legend.AddEntry(h_all_prefit, "Expected (pre-fit) ", "l")
     if sb:
       legend.AddEntry(h_postfit['totalsig'], "S+B post-fit", "f")
 
   else:
-    legend = TLegend(.5,.65,.90,.90)
+    legend = TLegend(.625,.65,.925,.90)
     #legend = TLegend(.6,.6,.92,.92)
     legend.AddEntry(h_data,"Data","elp")
     legend.AddEntry(h_all_postfit, "Post-fit "+legname, "l")
@@ -541,24 +541,15 @@ def plotPreFitPostFit(region,category,sb=False):
 
   gPad.RedrawAxis()
 
-  folder ="/afs/cern.ch/user/z/zdemirag/www/Monophoton/"
+  folder = "/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin"
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".pdf")
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".png")
-  c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".C")
-  c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".root")
+  # c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".C")
+  # c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".root")
 
 
-plotPreFitPostFit("singlemuon","monophoton")
-plotPreFitPostFit("dimuon","monophoton")
-plotPreFitPostFit("singleelectron","monophoton")
-plotPreFitPostFit("dielectron","monophoton")
+plotPreFitPostFit("monomu","monophoton")
+plotPreFitPostFit("dimu","monophoton")
+plotPreFitPostFit("monoel","monophoton")
+plotPreFitPostFit("diel","monophoton")
 plotPreFitPostFit("signal","monophoton")
-
-#plotPreFitPostFit("singlemuon","monov")
-#plotPreFitPostFit("dimuon","monov")
-#plotPreFitPostFit("gjets","monov")
-#plotPreFitPostFit("singleelectron","monov")
-#plotPreFitPostFit("dielectron","monov")
-
-#plotPreFitPostFit("signal","monojet",True)
-#plotPreFitPostFit("signal","monov")

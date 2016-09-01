@@ -13,32 +13,34 @@ def plot_ratio(process,category):
 
     f = TFile('combined_model.root','READ')
         
-    if (process=='zmm'):
+    addsys = 0
+    
+    if (process=='dimu'):
         dirname = "Z_constraints_category_"+category
         base    = "dimu_weights_"+category
         label = "R_{Z(#mu#mu)}"
-        addsys  = math.sqrt(0.04*0.04 + 0.02*0.02)
+        # addsys  = math.sqrt(0.04*0.04 + 0.02*0.02)
 
-    if (process=='zee'):
+    if (process=='diel'):
         dirname = "Z_constraints_category_"+category
         base    = "diel_weights_"+category
         label   = "R_{Z(ee)}"
-        addsys  = math.sqrt(0.04*0.04 + 0.02*0.02 + 0.01*0.01)
+        # addsys  = math.sqrt(0.04*0.04 + 0.02*0.02 + 0.01*0.01)
 
-    if (process=='wen'):
+    if (process=='monoel'):
         dirname = "W_constraints_category_"+category 
-        base    = "wen_weights_"+category
+        base    = "monoel_weights_"+category
         label   = "R_{W(e#nu)}"
         #addsys  = math.sqrt(0.02*0.02 + 0.02*0.02 + 0.01*0.01 + 0.02*0.02)
-        addsys  = 0.02
+        # addsys  = 0.02
         
-    if (process=='wmn'):
+    if (process=='monomu'):
         dirname = "W_constraints_category_"+category 
-        base    = "wmn_weights_"+category
+        base    = "monomu_weights_"+category
         label   = "R_{W(#mu#nu)}"
         #addsys  = math.sqrt(0.03*0.03)
         #addsys  = math.sqrt(0.03*0.03 + 0.01*0.01)
-        addsys  = 0.02
+        # addsys  = 0.02
         
 
     ratio = f.Get(dirname+"/"+base)
@@ -172,7 +174,7 @@ def plot_ratio(process,category):
     
     gPad.RedrawAxis()
 
-    folder ="/afs/cern.ch/user/z/zdemirag/www/Monophoton/"
+    folder ="/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin"
 
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".pdf")
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".png")
@@ -187,7 +189,7 @@ def plot_ratio(process,category):
 
     del c
  
-plot_ratio('zmm','monophoton')
-plot_ratio('zee','monophoton')
-plot_ratio('wen','monophoton')
-plot_ratio('wmn','monophoton')
+plot_ratio('dimu','monophoton')
+plot_ratio('diel','monophoton')
+plot_ratio('monoel','monophoton')
+plot_ratio('monomu','monophoton')
