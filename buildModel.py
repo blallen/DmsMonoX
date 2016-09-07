@@ -50,13 +50,29 @@ for cat_id,cat in enumerate(x.categories):
   # Run through regions and add MC/data processes for each 
   # Each region has 'signal' and 'backgrounds'
   samples = cat['samples'].keys()
+  systematics = cat['systematics']
   for sample in samples:
       entry = cat['samples'][sample]
       mb.addSample(sample,entry[0],entry[1],entry[2],entry[3],1)  # name, region, process, is_mc, is_signal  
+
+      # add systematic shapes
+      for syst in systematics:
+        if fin.Get(sample+'_'+syst):
+          mb.addSample(sample+'_'+syst, entry[0], entry[1]+'_'+syst, entry[2], entry[3], 1)
+        elif fin.Get(sample+'_'+syst+'Up') and fin.Get(sample+'_'+syst+'Down'):
+          mb.addSample(sample+'_'+syst+'Up', entry[0], entry[1]+'_'+syst+'Up', entry[2], entry[3], 1)
+          mb.addSample(sample+'_'+syst+'Down', entry[0], entry[1]+'_'+syst+'Down', entry[2], entry[3], 1)
   mb.save()
+
 
   # Add any 'cutstring' for future reference
   cstr = r.TNamed("cut_category_%s"%cat['name'],cat["cutstring"])
   fdir.cd(); cstr.Write()
+
+# finally add the config used into the file
+config = r.TMacro("%s" % sys.argv[1])
+config.ReadFile("configs/%s.py" % sys.argv[1])
+fout.cd()
+config.Write()  
 
 print "done!, Model saved in -> ", fout.GetName()

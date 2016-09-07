@@ -15,6 +15,7 @@ monophoton_category = {
             ,"bins":bins[:]
             ,"additionalvars":[] #[['phoPtHighMet',100,200,1250]]
             ,"pdfmodel":0
+            ,"systematics":['lumi', 'gec', 'jec']
             ,"samples":
 	   	{          
 		  # Signal Region
