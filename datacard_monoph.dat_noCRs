@@ -1,0 +1,40 @@
+imax * number of bins
+jmax * number of processes minus 1
+kmax * number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *                         monophoton_signal  combined_model.root combinedws:monophoton_signal_$PROCESS combinedws:monophoton_signal_$PROCESS_$SYSTEMATIC
+shapes data_obs                  monophoton_signal  combined_model.root combinedws:monophoton_signal_data
+shapes dmv-500-1                 monophoton_signal  combined_model.root combinedws:monophoton_signal_dmv-500-1 combinedws:monophoton_signal_dmv-500-1_$SYSTEMATIC
+----------------------------------------------------------------------------------------------------------------------------------
+bin          monophoton_signal  
+observation  -1.0               
+----------------------------------------------------------------------------------------------------------------------------------
+bin                     monophoton_signal   monophoton_signal   monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  
+process                 dmv-500-1           efake               gjets              halo               hfake              minor              vvg                wg                 zg                 
+process      		-1                   1                   2                  3                  4                  5                  6                  7                  8                 
+rate         		-1                   -1                  -1                 -1                 -1                 -1                 -1                 -1                -1                
+----------------------------------------------------------------------------------------------------------------------------------									
+lumi            lnN     1.04                 -                   1.04               -                  -                  1.04               1.04               1.04               1.04                  
+# lumi        	shape   1                    -                   1                  -                  -                  1                  1                  1                  1                  
+gec		shape	1		     -			 1		    -		       -		  1		     1			1		   1		      
+jec		shape	1		     -			 1		    -		       -		  1		     1			1		   1		      
+photonSF	shape	1   		     -			 1   		    -		       -		  1   		     1   		1		   1		      
+customIDSF	lnN	1.055		     -			 1.055		    -		       -		  1.055		     1.055		1.055		   1.055		      
+# customIDSF	shape	1   		     -			 1   		    -		       -		  1   		     1   		1		   1		      
+leptonVetoSF	lnN	1.020		     -			 1.020		    -		       -		  1.020		     1.020		1.020		   1.020		      
+# leptonVetoSF	shape	1   		     -			 1   		    -		       -		  1   		     1   		1		   1		      
+minorQCDscale	lnN	-		     -			 1.033		    -		       -		  1.033		     1.033		-		   -		      
+# minorQCDscale shape	-		     -			 1   		    -		       -		  1   		     1   		-		   -		      
+minorPDF	shape	-		     -			 1		    -		       -		  1		     -			-		   -		      
+egFakerate      lnN     -                    1.079		 -		    -		       -		  -		     -			-		   -		      
+# egFakerate    shape   -                    1		 	 -		    -		       -		  -		     -			-		   -		      
+hfakeTfactor	shape	-		     -			 -		    -		       1		  -		     -			-		   -		      
+purity		shape	-		     -			 -		    -		       1		  -		     -			-		   -		      
+haloNorm	lnN	-		     -			 -		    1.690	       -		  -		     -			-		   -		      
+# haloNorm	shape	-		     -			 -		    1	       	       -		  -		     -			-		   -		      
+# haloShape	shapeU	-		     -			 -		    1	       	       -		  -		     -			-		   -		      
+vgQCDscale	shape	-		     -			 -		    -		       -		  -		     -			1		   1
+vgPDF		shape	-		     -			 -		    -		       -		  -		     -			1		   1
+wgEWK		shape	-		     -			 -		    -		       -		  -		     -			1		   -
+zgEWK		shape	-		     -			 -		    -		       -		  -		     -			-		   1
+----------------------------------------------------------------------------------------------------------------------------------
