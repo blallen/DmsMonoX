@@ -30,7 +30,10 @@ monophoton_category = {
                   ,"monoph-phoPtHighMet-wg"       :['signal','wg',1,0]
                   ,"monoph-phoPtHighMet-zg"       :['signal','zg',1,0]
                   ,"monoph-phoPtHighMet-data_obs" :['signal','data',0,0]
+
                   ,"monoph-phoPtHighMet-dmv-500-1":['signal','dmv-500-1',1,1]
+                  ,"monoph-phoPtHighMet-dmv-1000-1":['signal','dmv-1000-1',1,1]
+                  ,"monoph-phoPtHighMet-dmv-2000-1":['signal','dmv-2000-1',1,1]
 
                   # Dimuon Control Region
                   ,"dimu-phoPtHighMet-vvg"        :['dimu','vvg',1,0]

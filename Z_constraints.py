@@ -38,6 +38,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   ## Lepton Scale factors
 
+  """
   ZmmScalesSFUp = target.Clone(); ZmmScalesSFUp.SetName("dimu_weights_%s_muonSF_Up" %cid)
   ZmmScalesSFUp.Divide(controlmc_SFUp);  _fOut.WriteTObject(ZmmScalesSFUp)  # always write out to the directory 
 
@@ -49,7 +50,8 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   ZeeScalesSFDown = target.Clone(); ZeeScalesSFDown.SetName("diel_weights_%s_electronSF_Down" %cid)
   ZeeScalesSFDown.Divide(controlmc_e_SFDown);  _fOut.WriteTObject(ZeeScalesSFDown)  # always write out to the directory 
-  
+  """
+
   #######################################################################################################
 
   _bins = []  # take bins from some histogram, can choose anything but this is easy 
@@ -109,8 +111,8 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   #######################################################################################################
 
-  CRs[0].add_nuisance_shape('muonSF', _fOut)
-  CRs[1].add_nuisance_shape('electronSF', _fOut)
+  # CRs[0].add_nuisance_shape('muonSF', _fOut)
+  # CRs[1].add_nuisance_shape('electronSF', _fOut)
 
   #######################################################################################################
   
