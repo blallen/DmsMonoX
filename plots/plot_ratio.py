@@ -19,20 +19,23 @@ def plot_ratio(process,category):
         dirname = "Z_constraints_category_"+category
         base    = "dimu_weights_"+category
         label = "R_{Z(#mu#mu)}"
+        addsys = 0.02
         # addsys  = math.sqrt(0.04*0.04 + 0.02*0.02)
 
     if (process=='diel'):
         dirname = "Z_constraints_category_"+category
         base    = "diel_weights_"+category
         label   = "R_{Z(ee)}"
+        addsys = 0.04
         # addsys  = math.sqrt(0.04*0.04 + 0.02*0.02 + 0.01*0.01)
 
     if (process=='monoel'):
         dirname = "W_constraints_category_"+category 
         base    = "monoel_weights_"+category
         label   = "R_{W(e#nu)}"
+        
         #addsys  = math.sqrt(0.02*0.02 + 0.02*0.02 + 0.01*0.01 + 0.02*0.02)
-        # addsys  = 0.02
+        addsys  = 0.02
         
     if (process=='monomu'):
         dirname = "W_constraints_category_"+category 
@@ -40,7 +43,19 @@ def plot_ratio(process,category):
         label   = "R_{W(#mu#nu)}"
         #addsys  = math.sqrt(0.03*0.03)
         #addsys  = math.sqrt(0.03*0.03 + 0.01*0.01)
-        # addsys  = 0.02
+        addsys  = 0.01
+
+    if (process=='dilep'):
+        dirname = "Z_constraints_mergemue_category_"+category
+        base    = "dilep_weights_"+category
+        label   = "R_{Z(ll)}"
+        addsys = 0.04
+    
+    if (process=='monolep'):
+        dirname = "W_constraints_mergemue_category_"+category 
+        base    = "monolep_weights_"+category
+        label   = "R_{W(l#nu)}"
+        addsys  = 0.02
         
 
     ratio = f.Get(dirname+"/"+base)
@@ -174,7 +189,7 @@ def plot_ratio(process,category):
     
     gPad.RedrawAxis()
 
-    folder ="/home/ballen/public_html/cmsplots/monophoton/combinedfit/shape"
+    folder ="/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin_mergemue"
 
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".pdf")
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".png")
@@ -189,7 +204,7 @@ def plot_ratio(process,category):
 
     del c
  
-plot_ratio('dimu','monophoton')
-plot_ratio('diel','monophoton')
-plot_ratio('monoel','monophoton')
-plot_ratio('monomu','monophoton')
+plot_ratio('dilep','monophoton')
+# plot_ratio('diel','monophoton')
+# plot_ratio('monoel','monophoton')
+plot_ratio('monolep','monophoton')

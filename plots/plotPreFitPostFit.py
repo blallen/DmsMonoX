@@ -11,7 +11,7 @@ new_dic = defaultdict(dict)
 
 def plotPreFitPostFit(region,category,sb=False):
 
-  datalab = {"monomu":"monomu", "dimu":"dimu", "signal":"signal", "monoel":"monoel", "diel":"diel"}
+  datalab = {"monomu":"monomu", "dimu":"dimu", "signal":"signal", "monoel":"monoel", "diel":"diel", "dilep":"dilep", "monolep":"monolep"}
   
   f_mlfit = TFile('mlfit.root','READ')
 
@@ -24,8 +24,8 @@ def plotPreFitPostFit(region,category,sb=False):
   
   b_width = [50,50,50,50,100,100,300,400,0]
 
-  channel = {"monomu":category+"_monomu", "dimu":category+"_dimu", "signal":category+"_signal", "monoel":category+"_monoel", "diel":category+"_diel"}
-  mainbkg = {"monomu":"wg", "dimu":"zg", "signal":"zg", "monoel":"wg", "diel":"zg"}
+  channel = {"monomu":category+"_monomu", "dimu":category+"_dimu", "signal":category+"_signal", "monoel":category+"_monoel", "diel":category+"_diel", "dilep":category+"_dilep", "monolep":category+"_monolep"}
+  mainbkg = {"monomu":"wg", "dimu":"zg", "signal":"zg", "monoel":"wg", "diel":"zg", "monolep":"wg", "dilep":"zg"}
   
 
   processes = [
@@ -279,6 +279,10 @@ def plotPreFitPostFit(region,category,sb=False):
   if region == "diel":
     #legname = "Z #rightarrow ee"
     legname = "di-electron C.R."
+  if region == "dilep":
+    legname = "di-lepton C.R."
+  if region == "monolep":
+    legname = "single-lepton C.R."
 
   
   #legend.SetTextSize(0.04)
@@ -541,15 +545,15 @@ def plotPreFitPostFit(region,category,sb=False):
 
   gPad.RedrawAxis()
 
-  folder = "/home/ballen/public_html/cmsplots/monophoton/combinedfit/shape"
+  folder = "/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin_mergemue"
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".pdf")
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".png")
   # c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".C")
   # c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".root")
 
 
-plotPreFitPostFit("monomu","monophoton")
-plotPreFitPostFit("dimu","monophoton")
-plotPreFitPostFit("monoel","monophoton")
-plotPreFitPostFit("diel","monophoton")
+plotPreFitPostFit("monolep","monophoton")
+plotPreFitPostFit("dilep","monophoton")
+# plotPreFitPostFit("monoel","monophoton")
+# plotPreFitPostFit("diel","monophoton")
 plotPreFitPostFit("signal","monophoton")
