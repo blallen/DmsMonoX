@@ -47,7 +47,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
     CRs = [
       Channel("dilep",_wspace,out_ws,cid+'_'+model,ZllScales)
-     ,Channel("wgsignal",_wspace,out_ws,cid+'_'+model,WZScales)
+      ,Channel("wgsignal",_wspace,out_ws,cid+'_'+model,WZScales)
      ]
 
   # ############################ USER DEFINED ###########################################################
@@ -73,8 +73,8 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
     print "Adding an error -- ", byb_u.GetName(),err
     CRs[0].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"dilepCR",b),_fOut)
 
-  # addUncorrStatSysts(target, WZScales, "wz", "wz", CRs[1], cid, _fOut)
-
+  addUncorrStatSysts(target, WZScales, "wz", "wz", CRs[1], cid, _fOut)
+  """
   for b in range(target.GetNbinsX()):
     err = WZScales.GetBinError(b+1)
     if not WZScales.GetBinContent(b+1)>0: continue 
@@ -91,7 +91,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
     _fOut.WriteTObject(byb_d)
     print "Adding an error -- ", byb_u.GetName(),err
     CRs[1].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"wzCR",b),_fOut)
-
+  """
   #######################################################################################################
 
   # CRs[0].add_nuisance_shape('muonSF', _fOut)
