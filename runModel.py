@@ -3,7 +3,7 @@
 fOutName = "combined_model.root"  # --> Output file
 fName    = "mono-x.root"  # --> input file (i.e output from previous)
 categories = ["monophoton"] # --> Should be labeled as in original config 
-controlregions_def = [string+'_mergemue' for string in ["Z_constraints","W_constraints"]] # --> configuration configs for control region fits. 
+controlregions_def = [crdef+'_mergemue_WZlinked' for crdef in ["Z_constraints","W_constraints"]] # --> configuration configs for control region fits. 
 # Note if one conrol region def depends on another (i,e if setDependant() is called) it must come AFTER its 
 # the one it depends on in this list!
 #--------------------------------------------------------------------------------------//

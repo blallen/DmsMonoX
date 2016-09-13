@@ -189,7 +189,7 @@ def plot_ratio(process,category):
     
     gPad.RedrawAxis()
 
-    folder ="/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin_mergemue"
+    folder ="/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin"
 
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".pdf")
     c.SaveAs(folder+"/rfactor_"+category+"_"+process+".png")
@@ -204,7 +204,11 @@ def plot_ratio(process,category):
 
     del c
  
-plot_ratio('dilep','monophoton')
-# plot_ratio('diel','monophoton')
-# plot_ratio('monoel','monophoton')
-plot_ratio('monolep','monophoton')
+# plot_ratio('dilep','monophoton')
+# plot_ratio('monolep','monophoton')
+
+plot_ratio('dimu','monophoton')
+plot_ratio('monomu','monophoton')
+plot_ratio('diel','monophoton')
+plot_ratio('monoel','monophoton')
+

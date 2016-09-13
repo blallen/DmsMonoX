@@ -17,6 +17,24 @@ def getNormalizedHist(hist):
     thret.GetYaxis().SetTitle("Events/GeV")
   return thret
 
+def addUncorrStatSysts(target, Scales, wName, crName, CR, cid, _fOut):
+    for b in range(target.GetNbinsX()):
+      err = Scales.GetBinError(b+1)
+      if not Scales.GetBinContent(b+1)>0: continue 
+      relerr = err/Scales.GetBinContent(b+1)
+      if relerr<0.01: continue
+      byb_u = Scales.Clone(); byb_u.SetName("%s_weights_%s_%s_stat_error_%s_bin%d_Up"%(wName,cid,cid,crName+"CR",b))
+      byb_u.SetBinContent(b+1,Scales.GetBinContent(b+1)+err)
+      byb_d = Scales.Clone(); byb_d.SetName("%s_weights_%s_%s_stat_error_%s_bin%d_Down"%(wName,cid,cid,crName+"CR",b))
+      if (Scales.GetBinContent(b+1)-err > 0):
+        byb_d.SetBinContent(b+1,Scales.GetBinContent(b+1)-err)
+      else:
+        byb_d.SetBinContent(b+1,1)
+      _fOut.WriteTObject(byb_u)
+      _fOut.WriteTObject(byb_d)
+      print "Adding an error -- ", byb_u.GetName(),err
+      CR.add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,crName+"CR",b),_fOut)
+
 
 class Bin:
  def __init__(self,category,catid,chid,id,var,datasetname,wspace,wspace_out,xmin,xmax):

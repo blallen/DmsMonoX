@@ -545,15 +545,19 @@ def plotPreFitPostFit(region,category,sb=False):
 
   gPad.RedrawAxis()
 
-  folder = "/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin_mergemue"
+  folder = "/home/ballen/public_html/cmsplots/monophoton/combinedfit/onebin"
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".pdf")
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".png")
   # c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".C")
   # c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".root")
 
 
-plotPreFitPostFit("monolep","monophoton")
-plotPreFitPostFit("dilep","monophoton")
-# plotPreFitPostFit("monoel","monophoton")
-# plotPreFitPostFit("diel","monophoton")
+# plotPreFitPostFit("monolep","monophoton")
+# plotPreFitPostFit("dilep","monophoton")
+
+plotPreFitPostFit("monomu","monophoton")
+plotPreFitPostFit("dimu","monophoton")
+plotPreFitPostFit("monoel","monophoton")
+plotPreFitPostFit("diel","monophoton")
+
 plotPreFitPostFit("signal","monophoton")
