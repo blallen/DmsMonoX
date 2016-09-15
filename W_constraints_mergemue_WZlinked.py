@@ -20,31 +20,11 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   targetmc     = _fin.Get("signal_wg")      # define monimal (MC) of which process this config will model
   controlmc    = _fin.Get("monolep_wg")  # defines in / out acceptance
 
-  controlmc_muonSFUp    = _fin.Get("monolep_wg_muonSFUp")  
-  controlmc_muonSFDown  = _fin.Get("monolep_wg_muonSFDown")  
-
-  controlmc_electronSFUp    = _fin.Get("monolep_wg_electronSFUp")  
-  controlmc_electronSFDown  = _fin.Get("monolep_wg_electronSFDown")  
-
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
   # transfer factors (named with extention _sysname_Up/Down
   WlnScales = targetmc.Clone(); WlnScales.SetName("monolep_weights_%s"%cid)
   WlnScales.Divide(controlmc);  _fOut.WriteTObject(WlnScales)  # always write out to the directory 
 
-  ## Lepton Scale factors
-  """
-  WlnScalesSFUp = targetmc.Clone(); WlnScalesSFUp.SetName("monolep_weights_%s_muonSF_Up" %cid)
-  WlnScalesSFUp.Divide(controlmc_SFUp);  _fOut.WriteTObject(WlnScalesSFUp)  # always write out to the directory 
-
-  WlnScalesSFUp = targetmc.Clone(); WlnScalesSFUp.SetName("monolep_weights_%s_electronSF_Up" %cid)
-  WlnScalesSFUp.Divide(controlmc_e_SFUp);  _fOut.WriteTObject(WlnScalesSFUp)  # always write out to the directory 
-
-  WlnScalesSFDown = targetmc.Clone(); WlnScalesSFDown.SetName("monolep_weights_%s_muonSF_Down" %cid)
-  WlnScalesSFDown.Divide(controlmc_SFDown);  _fOut.WriteTObject(WlnScalesSFDown)  # always write out to the directory 
-
-  WlnScalesSFDown = targetmc.Clone(); WlnScalesSFDown.SetName("monolep_weights_%s_electronSF_Down" %cid)
-  WlnScalesSFDown.Divide(controlmc_e_SFDown);  _fOut.WriteTObject(WlnScalesSFDown)  # always write out to the directory 
-  """
   #######################################################################################################
 
   _bins = []  # take bins from some histogram, can choose anything but this is easy 
@@ -60,7 +40,6 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   CRs = [
    Channel("monolep",_wspace,out_ws,cid+'_'+model,WlnScales),
   ]
-
 
   # ############################ USER DEFINED ###########################################################
   # Add systematics in the following, for normalisations use name, relative size (0.01 --> 1%)
@@ -93,7 +72,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   cat = Category(model,cid,nam,_fin,_fOut,_wspace,out_ws,_bins,metname,targetmc.GetName(),CRs,diag)
 
-  # cat.setDependant("zg","wgsignal")  # Can use this to state that the "BASE" of this is already dependant on another process
+  cat.setDependant("zg","wgsignal")  # Can use this to state that the "BASE" of this is already dependant on another process
   # EG if the W->lv in signal is dependant on the Z->vv and then the W->mv is depenant on W->lv, then 
   # give the arguments model,channel name from the config which defines the Z->vv => W->lv map! 
   # Return of course
