@@ -153,22 +153,24 @@ def WZ_systSetup(_wspace, _fin, _fOut, nam):
 
   WZScalesQCDUp = WZScales.Clone(); WZScalesQCDUp.SetName("wz_weights_%s_vgQCDscale_Up" % nam)
   for b in range(1, WZScalesQCDUp.GetNbinsX()+1):
-    upup = target_QCDUp.GetBinContent(b) / controlmc_QCDUp.GetBinContent(b)
-    updown = target_QCDUp.GetBinContent(b) / controlmc_QCDDown.GetBinContent(b)
+    rNom = WZScales.GetBinContent(b)
+    upup = target_QCDUp.GetBinContent(b) / controlmc_QCDUp.GetBinContent(b) - rNom
+    updown = target_QCDUp.GetBinContent(b) / controlmc_QCDDown.GetBinContent(b) -rNom
 
     dRatio = math.sqrt( (1 + corr)/2 * upup**2 + (1 - corr)/2 * updown**2 )
-    rUp = WZScalesQCDUp.GetBinContent(b) + dRatio
+    rUp = rNom + dRatio
     WZScalesQCDUp.SetBinContent(b, rUp)
 
   _fOut.WriteTObject(WZScalesQCDUp)
 
   WZScalesQCDDown = WZScales.Clone(); WZScalesQCDDown.SetName("wz_weights_%s_vgQCDscale_Down" % nam)
   for b in range(1, WZScalesQCDDown.GetNbinsX()+1):
-    downdown = target_QCDDown.GetBinContent(b) / controlmc_QCDDown.GetBinContent(b)
-    downup = target_QCDDown.GetBinContent(b) / controlmc_QCDUp.GetBinContent(b)
+    rNom = WZScales.GetBinContent(b)
+    downdown = target_QCDDown.GetBinContent(b) / controlmc_QCDDown.GetBinContent(b) - rNom
+    downup = target_QCDDown.GetBinContent(b) / controlmc_QCDUp.GetBinContent(b) - rNom
 
     dRatio = math.sqrt( (1 + corr)/2 * downdown**2 + (1 - corr)/2 * downup**2 )
-    rDown = WZScalesQCDDown.GetBinContent(b) - dRatio
+    rDown = rNom - dRatio
     WZScalesQCDDown.SetBinContent(b, rDown)
 
   _fOut.WriteTObject(WZScalesQCDDown)

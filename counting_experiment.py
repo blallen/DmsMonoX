@@ -166,8 +166,12 @@ class Bin:
     else: self.model_mu = self.wspace_out.var("model_mu_cat_%s_bin_%d"%(self.catid,self.id))
    else: 
     print "OOOH NICE!!!!!!" 
+    print functionalForm
     DEPENDANT = "%s_bin_%d"%(functionalForm,self.id)
+    print DEPENDANT
     self.model_mu = self.wspace_out.function("pmu_%s"%(DEPENDANT))
+    print "pmu_%s"%(DEPENDANT)
+    print self.model_mu
 
    arglist = r.RooArgList((self.model_mu),self.wspace_out.var(self.sfactor.GetName()))
 
@@ -184,7 +188,7 @@ class Bin:
          continue
 
 
-        print "Adding Nuisance ", nuis 
+        print "\n Adding Nuisance ", nuis 
 	# Nuisance*Scale is the model 
 	#form_args = r.RooArgList(self.wspace_out.var("nuis_%s"%nuis),self.wspace_out.function("sys_function_%s_%s"%(nuis,self.binid)))
 	form_args = r.RooArgList(self.wspace_out.function("sys_function_%s_%s"%(nuis,self.binid)))
@@ -206,6 +210,7 @@ class Bin:
    self.mu = r.RooFormulaVar("mu_%s"%self.binid,"Number of expected events in %s"%self.binid,"@0",bkgArgList)
  
    #self.mu = r.RooFormulaVar("mu_%s"%self.binid,"Number of expected events in %s"%self.binid,"@0/(@1*@2)",r.RooArgList(self.integral,self.sfactor,self.pdfFullInt))
+   print "\n bah", self.mu, '\n'
    self.wspace_out._import(self.mu,r.RooFit.RecycleConflictNodes())
    self.wspace_out._import(self.obs,r.RooFit.RecycleConflictNodes())
    self.wspace_out.factory("Poisson::pdf_%s(observed,mu_%s)"%(self.binid,self.binid))
