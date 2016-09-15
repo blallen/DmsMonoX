@@ -74,24 +74,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
     CRs[0].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"dilepCR",b),_fOut)
 
   addUncorrStatSysts(target, WZScales, "wz", "wz", CRs[1], cid, _fOut)
-  """
-  for b in range(target.GetNbinsX()):
-    err = WZScales.GetBinError(b+1)
-    if not WZScales.GetBinContent(b+1)>0: continue 
-    relerr = err/WZScales.GetBinContent(b+1)
-    if relerr<0.01: continue
-    byb_u = WZScales.Clone(); byb_u.SetName("wz_weights_%s_%s_stat_error_%s_bin%d_Up"%(cid,cid,"wzCR",b))
-    byb_u.SetBinContent(b+1,WZScales.GetBinContent(b+1)+err)
-    byb_d = WZScales.Clone(); byb_d.SetName("wz_weights_%s_%s_stat_error_%s_bin%d_Down"%(cid,cid,"wzCR",b))
-    if (WZScales.GetBinContent(b+1)-err > 0):
-      byb_d.SetBinContent(b+1,WZScales.GetBinContent(b+1)-err)
-    else:
-      byb_d.SetBinContent(b+1,1)
-    _fOut.WriteTObject(byb_u)
-    _fOut.WriteTObject(byb_d)
-    print "Adding an error -- ", byb_u.GetName(),err
-    CRs[1].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"wzCR",b),_fOut)
-  """
+
   #######################################################################################################
 
   # CRs[0].add_nuisance_shape('muonSF', _fOut)
