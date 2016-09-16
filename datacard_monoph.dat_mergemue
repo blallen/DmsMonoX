@@ -7,7 +7,7 @@ shapes data_obs                  monophoton_dilep    combined_model.root combine
 shapes zg                        monophoton_dilep    combined_model.root combinedws:monophoton_dilep_zg_model
 shapes *                         monophoton_signal  combined_model.root combinedws:monophoton_signal_$PROCESS combinedws:monophoton_signal_$PROCESS_$SYSTEMATIC
 shapes data_obs                  monophoton_signal  combined_model.root combinedws:monophoton_signal_data
-shapes dmv-1000-1                 monophoton_signal  combined_model.root combinedws:monophoton_signal_dmv-1000-1 combinedws:monophoton_signal_dmv-1000-1_$SYSTEMATIC
+shapes dmv-2000-1                 monophoton_signal  combined_model.root combinedws:monophoton_signal_dmv-2000-1 combinedws:monophoton_signal_dmv-2000-1_$SYSTEMATIC
 shapes wg                        monophoton_signal  combined_model.root combinedws:monophoton_signal_wg_model
 shapes zg                        monophoton_signal  combined_model.root combinedws:monophoton_signal_zg_model
 shapes *                         monophoton_monolep  combined_model.root combinedws:monophoton_monolep_$PROCESS combinedws:monophoton_monolep_$PROCESS_$SYSTEMATIC
@@ -19,7 +19,7 @@ bin          monophoton_signal  monophoton_dilep  monophoton_monolep
 observation  -1.0               -1.0             -1.0                  
 ----------------------------------------------------------------------------------------------------------------------------------
 bin                     monophoton_signal   monophoton_signal   monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_dilep  monophoton_dilep  monophoton_dilep  monophoton_dilep   monophoton_monolep  monophoton_monolep monophoton_monolep  monophoton_monolep 
-process                 dmv-1000-1           efake               gjets              halo               hfake              minor              vvg                wg                 zg                 top              vvg              zg               zjets             top                zgamm  	      vvg                wg	  	 
+process                 dmv-2000-1           efake               gjets              halo               hfake              minor              vvg                wg                 zg                 top              vvg              zg               zjets             top                zgamm  	      vvg                wg	  	 
 process      		-1                   1                   2                  3                  4                  5                  6                  7                  8                 9                6                8                10                9                  11                6                  7	  	 
 rate         		-1                   -1                  -1                 -1                 -1                 -1                 -1                 1.0                1.0                -1               -1               1.0              -1               -1                 -1                -1                 1.0	  	 
 ----------------------------------------------------------------------------------------------------------------------------------																	 		    	   	     	  			         
@@ -32,10 +32,8 @@ customIDSF	lnN	1.055		     -			 1.055		    -		       -		  1.055		     1.055		-		
 # customIDSF	shape	1   		     -			 1   		    -		       -		  1   		     1   		-		   -		      1   	       1   		-		 1   		  1   		    1    	      1   		 -		     	 
 leptonVetoSF	lnN	1.020		     -			 1.020		    -		       -		  1.020		     1.020		-		   -		      1.020	       1.020		-		 1.020		  1.020		    1.020 	      1.020		 -		     	 
 # leptonVetoSF	shape	1   		     -			 1   		    -		       -		  1   		     1   		-		   -		      1   	       1   		-		 1   		  1   		    1    	      1   		 -		     	 
-muonSF		lnN	-		     -			 -		    -		       -		  -		     -			-		   -		      1.04   	       1.04   		1.04   		 1.04   	  1.02		    1.02	      1.02		 1.02		 
-# muonSF	shape	-		     -			 -		    -		       -		  -		     -			-		   -		      1   	       1   		-   		 1   		  1		    1	      	      1		 	 -		 
-electronSF	lnN	-		     -			 -		    -		       -		  -		     -			-		   -		      -		       -		-		 -		  -		    - 		      -		    	 -			 
-# electronSF	shape	-		     -			 -		    -		       -		  -		     -			-		   -		      -		       -		-		 -		  -		    - 		      -		    	 -			 
+leptonSF	lnN	-		     -			 -		    -		       -		  -		     -			-		   -		      1.02   	       1.02   		1.02   		 1.02   	  1.01		    1.01	      1.01		 1.01		 
+# leptonSF	shape	-		     -			 -		    -		       -		  -		     -			-		   -		      1   	       1   		-   		 1   		  1		    1	      	      1		 	 -		 
 minorQCDscale	lnN	-		     -			 1.033		    -		       -		  1.033		     1.033		-		   -		      1.033	       1.033		-		 1.033		  1.033		    1.033	      1.033		 -			 
 # minorQCDscale shape	-		     -			 1   		    -		       -		  1   		     1   		-		   -		      1   	       1   		-		 1   		  1   		    1   	      1   		 -			 
 minorPDF	shape	-		     -			 1		    -		       -		  1		     -			-		   -		      1	       	       -		-		 1		  1		    1 		      -		     	 -
@@ -52,8 +50,17 @@ lumiscale rateParam * * 1.0
 # muonSF param 0.0 1
 # electronSF param 0.0 1
 
+#monophoton_stat_error_dilepCR_bin0 param 0.0 1
+#monophoton_stat_error_monolepCR_bin0 param 0.0 1
+
 monophoton_stat_error_dilepCR_bin0 param 0.0 1
+monophoton_stat_error_dilepCR_bin1 param 0.0 1
+monophoton_stat_error_dilepCR_bin2 param 0.0 1
+monophoton_stat_error_dilepCR_bin3 param 0.0 1
 monophoton_stat_error_monolepCR_bin0 param 0.0 1
+monophoton_stat_error_monolepCR_bin1 param 0.0 1
+monophoton_stat_error_monolepCR_bin2 param 0.0 1
+monophoton_stat_error_monolepCR_bin3 param 0.0 1
 
 
 stat group = monophoton_stat_error_dilepCR_bin0 

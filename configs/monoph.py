@@ -4,7 +4,8 @@
 out_file_name = 'mono-x.root'
 
 # bins = [175.0,190.0,250.0,400.0,700.0,1000.0]
-bins = [175.0, 1000.0]
+bins = [175.0, 200., 225., 250., 275., 300., 325., 350., 400., 450., 500., 600., 800., 1000.0] # maybe can do a bin at 800, improve limits, but tfactors and fits go weird
+# bins = [175.0, 1000.0]
 
 monophoton_category = {
 	    'name':"monophoton"

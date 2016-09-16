@@ -3,7 +3,7 @@
 fOutName = "combined_model.root"  # --> Output file
 fName    = "mono-x.root"  # --> input file (i.e output from previous)
 categories = ["monophoton"] # --> Should be labeled as in original config 
-controlregions_def = [crdef+'_mergemue_WZlinked' for crdef in ["Z_constraints","W_constraints"]] # --> configuration configs for control region fits. 
+controlregions_def = [crdef for crdef in ["Z_constraints","W_constraints"]] # --> configuration configs for control region fits. 
 # Note if one conrol region def depends on another (i,e if setDependant() is called) it must come AFTER its 
 # the one it depends on in this list!
 #--------------------------------------------------------------------------------------//
@@ -15,6 +15,7 @@ controlregions_def = [crdef+'_mergemue_WZlinked' for crdef in ["Z_constraints","
 from pullPlot import pullPlot
 from counting_experiment import *
 from convert import * 
+import sys
 
 from HiggsAnalysis.CombinedLimit.ModelTools import *
 
@@ -61,7 +62,11 @@ for crd,crn in enumerate(controlregions_def):
 for cid,cn in enumerate(cmb_categories):
         print "Run Model: cid, cn", cid,cn
 	cn.init_channels()
+	# sys.stdin.readline()
+	print '\n'
         channels = cn.ret_channels()
+	# sys.stdin.readline()
+	print "\n\n\n"
 
 # Save a Pre-fit snapshot
 out_ws.saveSnapshot("PRE_EXT_FIT_Clean",out_ws.allVars()) 

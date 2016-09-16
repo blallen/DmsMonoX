@@ -4,7 +4,8 @@
 out_file_name = 'mono-x.root'
 
 # bins = [175.0,190.0,250.0,400.0,700.0,1000.0]
-bins = [175.0, 1000.0]
+# bins = [175.0, 1000.0]
+bins = [175.0, 250.0, 350.0, 500.0, 1000.0]
 
 monophoton_category = {
 	    'name':"monophoton"
