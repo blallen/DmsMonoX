@@ -27,9 +27,9 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # transfer factors (named with extention _sysname_Up/Down
   ZllScales = target.Clone(); ZllScales.SetName("dilep_weights_%s" %cid)
   ZllScales.Divide(controlmc);  _fOut.WriteTObject(ZllScales)  # always write out to the directory 
-
+  
   WZScales = target.Clone(); WZScales.SetName("wz_weights_%s" %cid)
-  WZScales.Divide(controlmc);  _fOut.WriteTObject(WZScales)  # always write out to the directory 
+  WZScales.Divide(controlmc_w);  _fOut.WriteTObject(WZScales)  # always write out to the directory 
 
   WZ_systSetup(_wspace, _fin, _fOut, cid)
 
@@ -102,12 +102,12 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 def WZ_systSetup(_wspace, _fin, _fOut, nam):
   
   target             = _fin.Get("signal_zg")      # define monimal (MC) of which process this config will model
-  controlmc          = _fin.Get("signal_wg")
+  controlmc_w          = _fin.Get("signal_wg")
 
   WZScales = target.Clone(); WZScales.SetName("wz_weights_%s" %nam)
-  WZScales.Divide(controlmc);  # not writing since already did in main part
+  WZScales.Divide(controlmc_w);  # _fOut.WriteTObject(WZScales)  # always write out to the directory 
 
-  WSpectrum = controlmc.Clone(); WSpectrum.SetName("w_spectrum_%s_"%nam)
+  WSpectrum = controlmc_w.Clone(); WSpectrum.SetName("w_spectrum_%s_"%nam)
   ZvvSpectrum  = target.Clone(); ZvvSpectrum.SetName("zvv_spectrum_%s_"%nam)
 
   _fOut.WriteTObject( WSpectrum )
@@ -116,29 +116,29 @@ def WZ_systSetup(_wspace, _fin, _fOut, nam):
 
   target_PDFUp = _fin.Get("signal_zg_vgPDFUp")
   target_PDFDown = _fin.Get("signal_zg_vgPDFDown")
-  controlmc_PDFUp = _fin.Get("signal_wg_vgPDFUp")
-  controlmc_PDFDown = _fin.Get("signal_wg_vgPDFDown")
+  controlmc_w_PDFUp = _fin.Get("signal_wg_vgPDFUp")
+  controlmc_w_PDFDown = _fin.Get("signal_wg_vgPDFDown")
   
   WZScalesPDFUp = target_PDFUp.Clone(); WZScalesPDFUp.SetName("wz_weights_%s_vgPDF_Up" %nam)
-  WZScalesPDFUp.Divide(controlmc_PDFUp);  _fOut.WriteTObject(WZScalesPDFUp)  # always write out to the directory
+  WZScalesPDFUp.Divide(controlmc_w_PDFUp);  _fOut.WriteTObject(WZScalesPDFUp)  # always write out to the directory
 
   WZScalesPDFDown = target_PDFDown.Clone(); WZScalesPDFDown.SetName("wz_weights_%s_vgPDF_Down" %nam)
-  WZScalesPDFDown.Divide(controlmc_PDFDown);  _fOut.WriteTObject(WZScalesPDFDown)  # always write out to the directory
+  WZScalesPDFDown.Divide(controlmc_w_PDFDown);  _fOut.WriteTObject(WZScalesPDFDown)  # always write out to the directory
 
   ### QCD Scale Uncertainty
 
   target_QCDUp = _fin.Get("signal_zg_vgQCDscaleUp")
   target_QCDDown = _fin.Get("signal_zg_vgQCDscaleDown")
-  controlmc_QCDUp = _fin.Get("signal_wg_vgQCDscaleUp")
-  controlmc_QCDDown = _fin.Get("signal_wg_vgQCDscaleDown")
+  controlmc_w_QCDUp = _fin.Get("signal_wg_vgQCDscaleUp")
+  controlmc_w_QCDDown = _fin.Get("signal_wg_vgQCDscaleDown")
 
   corr = 0.80
 
   WZScalesQCDUp = WZScales.Clone(); WZScalesQCDUp.SetName("wz_weights_%s_vgQCDscale_Up" % nam)
   for b in range(1, WZScalesQCDUp.GetNbinsX()+1):
     rNom = WZScales.GetBinContent(b)
-    upup = target_QCDUp.GetBinContent(b) / controlmc_QCDUp.GetBinContent(b) - rNom
-    updown = target_QCDUp.GetBinContent(b) / controlmc_QCDDown.GetBinContent(b) -rNom
+    upup = target_QCDUp.GetBinContent(b) / controlmc_w_QCDUp.GetBinContent(b) - rNom
+    updown = target_QCDUp.GetBinContent(b) / controlmc_w_QCDDown.GetBinContent(b) -rNom
 
     dRatio = math.sqrt( (1 + corr)/2 * upup**2 + (1 - corr)/2 * updown**2 )
     rUp = rNom + dRatio
@@ -149,8 +149,8 @@ def WZ_systSetup(_wspace, _fin, _fOut, nam):
   WZScalesQCDDown = WZScales.Clone(); WZScalesQCDDown.SetName("wz_weights_%s_vgQCDscale_Down" % nam)
   for b in range(1, WZScalesQCDDown.GetNbinsX()+1):
     rNom = WZScales.GetBinContent(b)
-    downdown = target_QCDDown.GetBinContent(b) / controlmc_QCDDown.GetBinContent(b) - rNom
-    downup = target_QCDDown.GetBinContent(b) / controlmc_QCDUp.GetBinContent(b) - rNom
+    downdown = target_QCDDown.GetBinContent(b) / controlmc_w_QCDDown.GetBinContent(b) - rNom
+    downup = target_QCDDown.GetBinContent(b) / controlmc_w_QCDUp.GetBinContent(b) - rNom
 
     dRatio = math.sqrt( (1 + corr)/2 * downdown**2 + (1 - corr)/2 * downup**2 )
     rDown = rNom - dRatio
@@ -162,14 +162,14 @@ def WZ_systSetup(_wspace, _fin, _fOut, nam):
 
   target_EWKUp = _fin.Get("signal_zg_zgEWKUp")
   target_EWKDown = _fin.Get("signal_zg_zgEWKDown")
-  controlmc_EWKUp = _fin.Get("signal_wg_wgEWKUp")
-  controlmc_EWKDown = _fin.Get("signal_wg_wgEWKDown")
+  controlmc_w_EWKUp = _fin.Get("signal_wg_wgEWKUp")
+  controlmc_w_EWKDown = _fin.Get("signal_wg_wgEWKDown")
   
   WZScalesEWKUp = target_EWKUp.Clone(); WZScalesEWKUp.SetName("wz_weights_%s_vgEWK_Up" %nam)
-  WZScalesEWKUp.Divide(controlmc_EWKUp);  # _fOut.WriteTObject(WZScalesEWKUp)  # always write out to the directory
+  WZScalesEWKUp.Divide(controlmc_w_EWKUp);  # _fOut.WriteTObject(WZScalesEWKUp)  # always write out to the directory
 
   WZScalesEWKDown = target_EWKDown.Clone(); WZScalesEWKDown.SetName("wz_weights_%s_vgEWK_Down" %nam)
-  WZScalesEWKDown.Divide(controlmc_EWKDown);  # _fOut.WriteTObject(WZScalesEWKDown)  # always write out to the directory
+  WZScalesEWKDown.Divide(controlmc_w_EWKDown);  # _fOut.WriteTObject(WZScalesEWKDown)  # always write out to the directory
 
   #Now lets uncorrelate the bins:
   for b in range(target.GetNbinsX()):
@@ -190,7 +190,7 @@ def WZ_systSetup_NickStyle(_wspace, _fin, _fOut, nam, diag):
   gvptname   = "genBos_pt"    # Weights are in generator pT
 
   target             = _fin.Get("signal_zg")      # define monimal (MC) of which process this config will model
-  controlmc          = _fin.Get("signal_wg")
+  controlmc_w          = _fin.Get("signal_wg")
 
   fztow = r.TFile.Open("files/new/wtoz_unc.root") 
   
@@ -203,14 +203,14 @@ def WZ_systSetup_NickStyle(_wspace, _fin, _fOut, nam, diag):
   ztow_pdf_up   = fztow.Get("znlo1_over_wnlo1_pdfUp")
   ztow_pdf_down = fztow.Get("znlo1_over_wnlo1_pdfDown")
 
-  WSpectrum = controlmc.Clone(); WSpectrum.SetName("w_spectrum_%s_"%nam)
+  WSpectrum = controlmc_w.Clone(); WSpectrum.SetName("w_spectrum_%s_"%nam)
   ZvvSpectrum  = target.Clone(); ZvvSpectrum.SetName("zvv_spectrum_%s_"%nam)
 
   _fOut.WriteTObject( WSpectrum )
 
   #################################################################################################################
 
-  Wsig = controlmc.Clone(); Wsig.SetName("wz_weights_denom_%s"%nam)
+  Wsig = controlmc_w.Clone(); Wsig.SetName("wz_weights_denom_%s"%nam)
   Zvv_w = target.Clone(); Zvv_w.SetName("wz_weights_nom_%s"%nam)
 
   wratio_ren_scale_up = Zvv_w.Clone();  wratio_ren_scale_up.SetName("wz_weights_%s_wrenscale_Up"%nam);

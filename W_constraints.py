@@ -31,14 +31,14 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # transfer factors (named with extention _sysname_Up/Down
   WmnScales = targetmc.Clone(); WmnScales.SetName("monomu_weights_%s"%cid)
   WmnScales.Divide(controlmc);  
-  for iBin in range(1, WmnScales.GetNbinsX()+1):
-    WmnScales.SetBinError(iBin, 0.)
+  # for iBin in range(1, WmnScales.GetNbinsX()+1):
+  #   WmnScales.SetBinError(iBin, 0.)
   _fOut.WriteTObject(WmnScales)  # always write out to the directory 
 
   WenScales = targetmc.Clone(); WenScales.SetName("monoel_weights_%s"%cid)
   WenScales.Divide(controlmc_e);  
-  for iBin in range(1, WenScales.GetNbinsX()+1):
-    WenScales.SetBinError(iBin, 0.)
+  # for iBin in range(1, WenScales.GetNbinsX()+1):
+  #   WenScales.SetBinError(iBin, 0.)
   _fOut.WriteTObject(WenScales)  # always write out to the directory 
 
   ## Lepton Scale factors
@@ -81,8 +81,8 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   # Statistical uncertainties too!, one per bin 
 
-  # CRs[0].addUncorrStatSysts(targetmc, WmnScales, "monomu", "monomu", cid, _fOut)
-  # CRs[1].addUncorrStatSysts(targetmc, WenScales, "monoel", "monoel", cid, _fOut)
+  CRs[0].addUncorrStatSysts(targetmc, WmnScales, "monomu", "monomu", cid, _fOut)
+  CRs[1].addUncorrStatSysts(targetmc, WenScales, "monoel", "monoel", cid, _fOut)
 
   #######################################################################################################
 
