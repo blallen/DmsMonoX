@@ -53,7 +53,7 @@ haloNorm	lnN	-		     -			 -		    1.690	       -		  -		     -			-		   -		      -	
 # haloNorm	shape	-		     -			 -		    1	       	       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      - 	       	 -		    - 		      -                  -		    	  
 # haloShape	shapeU	-		     -			 -		    1	       	       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      - 	       	 -		    - 		      -                  -		    	  
 ----------------------------------------------------------------------------------------------------------------------------------
-lumiscale rateParam * * 1.0
+# lumiscale rateParam * * 1.0
 
 # muonSF param 0.0 1
 # electronSF param 0.0 1

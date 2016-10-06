@@ -9,7 +9,7 @@ bins = [175.0, 250.0, 350.0, 500.0, 1000.0]
 
 monophoton_category = {
 	    'name':"monophoton"
-            ,'in_file_name':"/home/ballen/cms/cmssw/044/CMSSW_7_4_7/src/MonoX/monophTrees.root"
+            ,'in_file_name':"monophTrees.root"
             ,"cutstring":"phoPtHighMet>175"
             ,"varstring":["phoPtHighMet",175,1000]
             ,"weightname":"weight"

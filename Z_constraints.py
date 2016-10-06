@@ -1,4 +1,5 @@
 import ROOT
+import math
 from counting_experiment import *
 # Define how a control region(s) transfer is made by defining *cmodel*, the calling pattern must be unchanged!
 # First define simple string which will be used for the datacard 
@@ -35,6 +36,9 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # for iBin in range(1, ZeeScales.GetNbinsX()+1):
   #   ZeeScales.SetBinError(iBin, 0.)
   _fOut.WriteTObject(ZeeScales)  # always write out to the directory 
+  
+  WZScales = target.Clone(); WZScales.SetName("wz_weights_%s" %cid)
+  WZScales.Divide(controlmc_w);  _fOut.WriteTObject(WZScales)  # always write out to the directory 
 
   #######################################################################################################
 
@@ -63,11 +67,18 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   CRs[1].addUncorrStatSysts(target, ZeeScales, "diel", "diel", cid, _fOut)
 
   # lepSFSystSetup(_wspace, _fin, _fOut, cid)
+  WZ_systSetup(_wspace, _fin, _fOut, cid)
 
   #######################################################################################################
 
   # CRs[0].add_nuisance_shape('muonSF', _fOut)
   # CRs[1].add_nuisance_shape('electronSF', _fOut)
+
+  CRs[1].add_nuisance_shape("vgPDF", _fOut)
+  CRs[1].add_nuisance_shape("vgQCDscale", _fOut)
+
+  for b in range(target.GetNbinsX()):
+    CRs[1].add_nuisance_shape("wz_ewk_%s_bin%d" % (cid,b), _fOut)
 
   #######################################################################################################
   
@@ -96,3 +107,89 @@ def lepSFSystSetup(_wspace, _fin, _fOut, nam):
 
   ZeeScalesSFDown = target.Clone(); ZeeScalesSFDown.SetName("diel_weights_%s_electronSF_Down" %cid)
   ZeeScalesSFDown.Divide(controlmc_e_SFDown);  _fOut.WriteTObject(ZeeScalesSFDown)  # always write out to the directory 
+
+def WZ_systSetup(_wspace, _fin, _fOut, nam):
+  
+  target             = _fin.Get("signal_zg")      # define monimal (MC) of which process this config will model
+  controlmc_w          = _fin.Get("signal_wg")
+
+  WZScales = target.Clone(); WZScales.SetName("wz_weights_%s" %nam)
+  WZScales.Divide(controlmc_w);  # not writing since already did in main part
+
+  WSpectrum = controlmc_w.Clone(); WSpectrum.SetName("w_spectrum_%s_"%nam)
+  ZvvSpectrum  = target.Clone(); ZvvSpectrum.SetName("zvv_spectrum_%s_"%nam)
+
+  _fOut.WriteTObject( WSpectrum )
+
+  ### PDF Uncertainty
+
+  target_PDFUp = _fin.Get("signal_zg_vgPDFUp")
+  target_PDFDown = _fin.Get("signal_zg_vgPDFDown")
+  controlmc_w_PDFUp = _fin.Get("signal_wg_vgPDFUp")
+  controlmc_w_PDFDown = _fin.Get("signal_wg_vgPDFDown")
+  
+  WZScalesPDFUp = target_PDFUp.Clone(); WZScalesPDFUp.SetName("wz_weights_%s_vgPDF_Up" %nam)
+  WZScalesPDFUp.Divide(controlmc_w_PDFUp);  _fOut.WriteTObject(WZScalesPDFUp)  # always write out to the directory
+
+  WZScalesPDFDown = target_PDFDown.Clone(); WZScalesPDFDown.SetName("wz_weights_%s_vgPDF_Down" %nam)
+  WZScalesPDFDown.Divide(controlmc_w_PDFDown);  _fOut.WriteTObject(WZScalesPDFDown)  # always write out to the directory
+
+  ### QCD Scale Uncertainty
+
+  target_QCDUp = _fin.Get("signal_zg_vgQCDscaleUp")
+  target_QCDDown = _fin.Get("signal_zg_vgQCDscaleDown")
+  controlmc_w_QCDUp = _fin.Get("signal_wg_vgQCDscaleUp")
+  controlmc_w_QCDDown = _fin.Get("signal_wg_vgQCDscaleDown")
+
+  corr = 0.80
+
+  WZScalesQCDUp = WZScales.Clone(); WZScalesQCDUp.SetName("wz_weights_%s_vgQCDscale_Up" % nam)
+  for b in range(1, WZScalesQCDUp.GetNbinsX()+1):
+    rNom = WZScales.GetBinContent(b)
+    upup = target_QCDUp.GetBinContent(b) / controlmc_w_QCDUp.GetBinContent(b) - rNom
+    updown = target_QCDUp.GetBinContent(b) / controlmc_w_QCDDown.GetBinContent(b) -rNom
+
+    dRatio = math.sqrt( (1 + corr)/2 * upup**2 + (1 - corr)/2 * updown**2 )
+    rUp = rNom + dRatio
+    WZScalesQCDUp.SetBinContent(b, rUp)
+
+  _fOut.WriteTObject(WZScalesQCDUp)
+
+  WZScalesQCDDown = WZScales.Clone(); WZScalesQCDDown.SetName("wz_weights_%s_vgQCDscale_Down" % nam)
+  for b in range(1, WZScalesQCDDown.GetNbinsX()+1):
+    rNom = WZScales.GetBinContent(b)
+    downdown = target_QCDDown.GetBinContent(b) / controlmc_w_QCDDown.GetBinContent(b) - rNom
+    downup = target_QCDDown.GetBinContent(b) / controlmc_w_QCDUp.GetBinContent(b) - rNom
+
+    dRatio = math.sqrt( (1 + corr)/2 * downdown**2 + (1 - corr)/2 * downup**2 )
+    rDown = rNom - dRatio
+    WZScalesQCDDown.SetBinContent(b, rDown)
+
+  _fOut.WriteTObject(WZScalesQCDDown)
+
+  ### EWK Uncertainty
+
+  target_EWKUp = _fin.Get("signal_zg_zgEWKUp")
+  target_EWKDown = _fin.Get("signal_zg_zgEWKDown")
+  controlmc_w_EWKUp = _fin.Get("signal_wg_wgEWKUp")
+  controlmc_w_EWKDown = _fin.Get("signal_wg_wgEWKDown")
+  
+  WZScalesEWKUp = target_EWKUp.Clone(); WZScalesEWKUp.SetName("wz_weights_%s_vgEWK_Up" %nam)
+  WZScalesEWKUp.Divide(controlmc_w_EWKUp);  # _fOut.WriteTObject(WZScalesEWKUp)  # always write out to the directory
+
+  WZScalesEWKDown = target_EWKDown.Clone(); WZScalesEWKDown.SetName("wz_weights_%s_vgEWK_Down" %nam)
+  WZScalesEWKDown.Divide(controlmc_w_EWKDown);  # _fOut.WriteTObject(WZScalesEWKDown)  # always write out to the directory
+
+  #Now lets uncorrelate the bins:
+  for b in range(target.GetNbinsX()):
+    ewk_up_w = WZScales.Clone(); ewk_up_w.SetName("wz_weights_%s_wz_ewk_%s_bin%d_Up"%(nam,nam,b))
+    ewk_down_w = WZScales.Clone(); ewk_down_w.SetName("wz_weights_%s_wz_ewk_%s_bin%d_Down"%(nam,nam,b))
+    for i in range(target.GetNbinsX()):
+      if i==b:
+        ewk_up_w.SetBinContent(i+1, WZScalesEWKUp.GetBinContent(i+1))
+        ewk_down_w.SetBinContent(i+1, WZScalesEWKDown.GetBinContent(i+1))
+        break
+
+    _fOut.WriteTObject(ewk_up_w)
+    _fOut.WriteTObject(ewk_down_w)
+>>>>>>> origin/monophoton
