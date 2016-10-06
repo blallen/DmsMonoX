@@ -64,18 +64,18 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   CRs[0].addUncorrStatSysts(targetmc, WmnScales, "monomu", "monomu", cid, _fOut)
   CRs[1].addUncorrStatSysts(targetmc, WenScales, "monoel", "monoel", cid, _fOut)
 
+  # lepSFSystSetup(_wspace, _fin, _fOut, cid)
+
   #######################################################################################################
 
   # CRs[0].add_nuisance_shape('muonSF', _fOut)
   # CRs[1].add_nuisance_shape('electronSF', _fOut)
 
-  # lepSFSystSetup(_wspace, _fin, _fOut, cid)
-
   #######################################################################################################
 
   cat = Category(model,cid,nam,_fin,_fOut,_wspace,out_ws,_bins,metname,targetmc.GetName(),CRs,diag)
 
-  #cat.setDependant("zjets","wjetssignal")  # Can use this to state that the "BASE" of this is already dependant on another process
+  #cat.setDependant("zg","wgsignal")  # Can use this to state that the "BASE" of this is already dependant on another process
   # EG if the W->lv in signal is dependant on the Z->vv and then the W->mv is depenant on W->lv, then 
   # give the arguments model,channel name from the config which defines the Z->vv => W->lv map! 
   # Return of course

@@ -19,9 +19,10 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   metname    = "phoPtHighMet"          # Observable variable name 
 
-  target             = _fin.Get("signal_zg")      # define monimal (MC) of which process this config will model
-  controlmc          = _fin.Get("dimu_zg")        # defines Zmm MC of which process will be controlled by
-  controlmc_e        = _fin.Get("diel_zg")        # defines Zee MC of which process will be controlled by
+  target             = _fin.Get("signal_zg")      # define nomimal (MC) of process this config models
+  controlmc          = _fin.Get("dimu_zg")        # defines Zmm MC which will control process
+  controlmc_e        = _fin.Get("diel_zg")        # defines Zee MC which will control process
+  controlmc_w        = _fin.Get("signal_wg")      # defines Wln MC which will control process
 
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
   # transfer factors (named with extention _sysname_Up/Down
@@ -55,6 +56,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   CRs = [
   Channel("dimu",_wspace,out_ws,cid+'_'+model,ZmmScales)
   ,Channel("diel",_wspace,out_ws,cid+'_'+model,ZeeScales)
+  # ,Channel("wgsignal",_wspace,out_ws,cid+'_'+model,WZScales)
   ]
 
   # ############################ USER DEFINED ###########################################################
@@ -65,7 +67,8 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   CRs[0].addUncorrStatSysts(target, ZmmScales, "dimu", "dimu", cid, _fOut)
   CRs[1].addUncorrStatSysts(target, ZeeScales, "diel", "diel", cid, _fOut)
-
+  CRs[2].addUncorrStatSysts(target, WZScales, "wz", "wz", cid, _fOut)
+  
   # lepSFSystSetup(_wspace, _fin, _fOut, cid)
   WZ_systSetup(_wspace, _fin, _fOut, cid)
 
@@ -74,11 +77,11 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # CRs[0].add_nuisance_shape('muonSF', _fOut)
   # CRs[1].add_nuisance_shape('electronSF', _fOut)
 
-  CRs[1].add_nuisance_shape("vgPDF", _fOut)
-  CRs[1].add_nuisance_shape("vgQCDscale", _fOut)
+  # CRs[2].add_nuisance_shape("vgPDF", _fOut)
+  # CRs[2].add_nuisance_shape("vgQCDscale", _fOut)
 
-  for b in range(target.GetNbinsX()):
-    CRs[1].add_nuisance_shape("wz_ewk_%s_bin%d" % (cid,b), _fOut)
+  # for b in range(target.GetNbinsX()):
+  #  CRs[2].add_nuisance_shape("wz_ewk_%s_bin%d" % (cid,b), _fOut)
 
   #######################################################################################################
   
@@ -192,4 +195,3 @@ def WZ_systSetup(_wspace, _fin, _fOut, nam):
 
     _fOut.WriteTObject(ewk_up_w)
     _fOut.WriteTObject(ewk_down_w)
->>>>>>> origin/monophoton

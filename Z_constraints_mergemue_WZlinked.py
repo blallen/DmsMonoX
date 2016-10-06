@@ -89,7 +89,6 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   #CRs[0].add_nuisance_shape("ewk",_fOut) 
   for b in range(target.GetNbinsX()):
-    # CRs[0].add_nuisance_shape("ewk_%s_bin%d"%(cid,b),_fOut) ## ???????
     # CRs[1].add_nuisance_shape("w_ewk_%s_bin%d"%(cid,b),_fOut)
     CRs[1].add_nuisance_shape("wz_ewk_%s_bin%d" % (cid,b), _fOut)
 
