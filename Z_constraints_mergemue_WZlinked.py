@@ -31,8 +31,6 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   WZScales = target.Clone(); WZScales.SetName("wz_weights_%s" %cid)
   WZScales.Divide(controlmc);  _fOut.WriteTObject(WZScales)  # always write out to the directory 
 
-  WZ_systSetup(_wspace, _fin, _fOut, cid)
-
   #######################################################################################################
 
   _bins = []  # take bins from some histogram, can choose anything but this is easy 
@@ -54,7 +52,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # Add systematics in the following, for normalisations use name, relative size (0.01 --> 1%)
   # for shapes use add_nuisance_shape with (name,_fOut)
   # note, the code will LOOK for something called NOMINAL_name_Up and NOMINAL_name_Down, where NOMINAL=WScales.GetName()
-  # these must be created and writted to the same dirctory as the nominal (fDir)
+  # these must be created and writted to the same dirctory as the nominal (fDir) 
 
   for b in range(target.GetNbinsX()):
     err = ZllScales.GetBinError(b+1)
@@ -74,6 +72,8 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
     CRs[0].add_nuisance_shape("%s_stat_error_%s_bin%d"%(cid,"dilepCR",b),_fOut)
 
   addUncorrStatSysts(target, WZScales, "wz", "wz", CRs[1], cid, _fOut)
+
+  WZ_systSetup(_wspace, _fin, _fOut, cid)
 
   #######################################################################################################
 

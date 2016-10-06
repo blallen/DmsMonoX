@@ -21,40 +21,20 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   controlmc    = _fin.Get("monomu_wg")  # defines in / out acceptance
   controlmc_e  = _fin.Get("monoel_wg")  # defines in / out acceptance
 
-  controlmc_SFUp    = _fin.Get("monomu_wg_muonSFUp")  
-  controlmc_SFDown  = _fin.Get("monomu_wg_muonSFDown")  
-
-  controlmc_e_SFUp    = _fin.Get("monoel_wg_electronSFUp")  
-  controlmc_e_SFDown  = _fin.Get("monoel_wg_electronSFDown")  
-
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
   # transfer factors (named with extention _sysname_Up/Down
   WmnScales = targetmc.Clone(); WmnScales.SetName("monomu_weights_%s"%cid)
   WmnScales.Divide(controlmc);  
-  for iBin in range(1, WmnScales.GetNbinsX()+1):
-    WmnScales.SetBinError(iBin, 0.)
+  # for iBin in range(1, WmnScales.GetNbinsX()+1):
+  #   WmnScales.SetBinError(iBin, 0.)
   _fOut.WriteTObject(WmnScales)  # always write out to the directory 
 
   WenScales = targetmc.Clone(); WenScales.SetName("monoel_weights_%s"%cid)
   WenScales.Divide(controlmc_e);  
-  for iBin in range(1, WenScales.GetNbinsX()+1):
-    WenScales.SetBinError(iBin, 0.)
+  # for iBin in range(1, WenScales.GetNbinsX()+1):
+  #   WenScales.SetBinError(iBin, 0.)
   _fOut.WriteTObject(WenScales)  # always write out to the directory 
 
-  ## Lepton Scale factors
-  """
-  WmnScalesSFUp = targetmc.Clone(); WmnScalesSFUp.SetName("monomu_weights_%s_muonSF_Up" %cid)
-  WmnScalesSFUp.Divide(controlmc_SFUp);  _fOut.WriteTObject(WmnScalesSFUp)  # always write out to the directory 
-
-  WenScalesSFUp = targetmc.Clone(); WenScalesSFUp.SetName("monoel_weights_%s_electronSF_Up" %cid)
-  WenScalesSFUp.Divide(controlmc_e_SFUp);  _fOut.WriteTObject(WenScalesSFUp)  # always write out to the directory 
-
-  WmnScalesSFDown = targetmc.Clone(); WmnScalesSFDown.SetName("monomu_weights_%s_muonSF_Down" %cid)
-  WmnScalesSFDown.Divide(controlmc_SFDown);  _fOut.WriteTObject(WmnScalesSFDown)  # always write out to the directory 
-
-  WenScalesSFDown = targetmc.Clone(); WenScalesSFDown.SetName("monoel_weights_%s_electronSF_Down" %cid)
-  WenScalesSFDown.Divide(controlmc_e_SFDown);  _fOut.WriteTObject(WenScalesSFDown)  # always write out to the directory 
-  """
   #######################################################################################################
 
   _bins = []  # take bins from some histogram, can choose anything but this is easy 
@@ -81,13 +61,15 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   # Statistical uncertainties too!, one per bin 
 
-  # CRs[0].addUncorrStatSysts(targetmc, WmnScales, "monomu", "monomu", cid, _fOut)
-  # CRs[1].addUncorrStatSysts(targetmc, WenScales, "monoel", "monoel", cid, _fOut)
+  CRs[0].addUncorrStatSysts(targetmc, WmnScales, "monomu", "monomu", cid, _fOut)
+  CRs[1].addUncorrStatSysts(targetmc, WenScales, "monoel", "monoel", cid, _fOut)
 
   #######################################################################################################
 
   # CRs[0].add_nuisance_shape('muonSF', _fOut)
   # CRs[1].add_nuisance_shape('electronSF', _fOut)
+
+  # lepSFSystSetup(_wspace, _fin, _fOut, cid)
 
   #######################################################################################################
 
@@ -99,4 +81,26 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # Return of course
 
   return cat
+
+def lepSFSystSetup(_wspace, _fin, _fOut, nam):
+
+  targetmc     = _fin.Get("signal_wg")      # define monimal (MC) of which process this config will model
+
+  controlmc_SFUp    = _fin.Get("monomu_wg_muonSFUp")  
+  controlmc_SFDown  = _fin.Get("monomu_wg_muonSFDown")  
+
+  controlmc_e_SFUp    = _fin.Get("monoel_wg_electronSFUp")  
+  controlmc_e_SFDown  = _fin.Get("monoel_wg_electronSFDown")  
+
+  WmnScalesSFUp = targetmc.Clone(); WmnScalesSFUp.SetName("monomu_weights_%s_muonSF_Up" %cid)
+  WmnScalesSFUp.Divide(controlmc_SFUp);  _fOut.WriteTObject(WmnScalesSFUp)  # always write out to the directory 
+
+  WenScalesSFUp = targetmc.Clone(); WenScalesSFUp.SetName("monoel_weights_%s_electronSF_Up" %cid)
+  WenScalesSFUp.Divide(controlmc_e_SFUp);  _fOut.WriteTObject(WenScalesSFUp)  # always write out to the directory 
+
+  WmnScalesSFDown = targetmc.Clone(); WmnScalesSFDown.SetName("monomu_weights_%s_muonSF_Down" %cid)
+  WmnScalesSFDown.Divide(controlmc_SFDown);  _fOut.WriteTObject(WmnScalesSFDown)  # always write out to the directory 
+
+  WenScalesSFDown = targetmc.Clone(); WenScalesSFDown.SetName("monoel_weights_%s_electronSF_Down" %cid)
+  WenScalesSFDown.Divide(controlmc_e_SFDown);  _fOut.WriteTObject(WenScalesSFDown)  # always write out to the directory 
 

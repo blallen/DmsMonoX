@@ -22,41 +22,19 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   controlmc          = _fin.Get("dimu_zg")        # defines Zmm MC of which process will be controlled by
   controlmc_e        = _fin.Get("diel_zg")        # defines Zee MC of which process will be controlled by
 
-  controlmc_SFUp     = _fin.Get("dimu_zg_muonSFUp")
-  controlmc_SFDown   = _fin.Get("dimu_zg_muonSFDown")
-
-  controlmc_e_SFUp     = _fin.Get("diel_zg_electronSFUp")
-  controlmc_e_SFDown   = _fin.Get("diel_zg_electronSFDown")
-
   # Create the transfer factors and save them (not here you can also create systematic variations of these 
   # transfer factors (named with extention _sysname_Up/Down
   ZmmScales = target.Clone(); ZmmScales.SetName("dimu_weights_%s" %cid)
   ZmmScales.Divide(controlmc);  
-  for iBin in range(1, ZmmScales.GetNbinsX()+1):
-    ZmmScales.SetBinError(iBin, 0.)
+  # for iBin in range(1, ZmmScales.GetNbinsX()+1):
+  #   ZmmScales.SetBinError(iBin, 0.)
   _fOut.WriteTObject(ZmmScales)  # always write out to the directory 
 
   ZeeScales = target.Clone(); ZeeScales.SetName("diel_weights_%s" %cid)
   ZeeScales.Divide(controlmc_e);  
-  for iBin in range(1, ZeeScales.GetNbinsX()+1):
-    ZeeScales.SetBinError(iBin, 0.)
+  # for iBin in range(1, ZeeScales.GetNbinsX()+1):
+  #   ZeeScales.SetBinError(iBin, 0.)
   _fOut.WriteTObject(ZeeScales)  # always write out to the directory 
-
-  ## Lepton Scale factors
-
-  """
-  ZmmScalesSFUp = target.Clone(); ZmmScalesSFUp.SetName("dimu_weights_%s_muonSF_Up" %cid)
-  ZmmScalesSFUp.Divide(controlmc_SFUp);  _fOut.WriteTObject(ZmmScalesSFUp)  # always write out to the directory 
-
-  ZeeScalesSFUp = target.Clone(); ZeeScalesSFUp.SetName("diel_weights_%s_electronSF_Up" %cid)
-  ZeeScalesSFUp.Divide(controlmc_e_SFUp);  _fOut.WriteTObject(ZeeScalesSFUp)  # always write out to the directory 
-
-  ZmmScalesSFDown = target.Clone(); ZmmScalesSFDown.SetName("dimu_weights_%s_muonSF_Down" %cid)
-  ZmmScalesSFDown.Divide(controlmc_SFDown);  _fOut.WriteTObject(ZmmScalesSFDown)  # always write out to the directory 
-
-  ZeeScalesSFDown = target.Clone(); ZeeScalesSFDown.SetName("diel_weights_%s_electronSF_Down" %cid)
-  ZeeScalesSFDown.Divide(controlmc_e_SFDown);  _fOut.WriteTObject(ZeeScalesSFDown)  # always write out to the directory 
-  """
 
   #######################################################################################################
 
@@ -81,8 +59,10 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # note, the code will LOOK for something called NOMINAL_name_Up and NOMINAL_name_Down, where NOMINAL=WScales.GetName()
   # these must be created and writted to the same dirctory as the nominal (fDir)
 
-  # CRs[0].addUncorrStatSysts(target, ZmmScales, "dimu", "dimu", cid, _fOut)
-  # CRs[1].addUncorrStatSysts(target, ZeeScales, "diel", "diel", cid, _fOut)
+  CRs[0].addUncorrStatSysts(target, ZmmScales, "dimu", "dimu", cid, _fOut)
+  CRs[1].addUncorrStatSysts(target, ZeeScales, "diel", "diel", cid, _fOut)
+
+  # lepSFSystSetup(_wspace, _fin, _fOut, cid)
 
   #######################################################################################################
 
@@ -95,3 +75,24 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   # Return of course
   return cat
 
+def lepSFSystSetup(_wspace, _fin, _fOut, nam):
+  
+  target             = _fin.Get("signal_zg")      # define monimal (MC) of which process this config will model
+
+  controlmc_SFUp     = _fin.Get("dimu_zg_muonSFUp")
+  controlmc_SFDown   = _fin.Get("dimu_zg_muonSFDown")
+
+  controlmc_e_SFUp     = _fin.Get("diel_zg_electronSFUp")
+  controlmc_e_SFDown   = _fin.Get("diel_zg_electronSFDown")
+
+  ZmmScalesSFUp = target.Clone(); ZmmScalesSFUp.SetName("dimu_weights_%s_muonSF_Up" %cid)
+  ZmmScalesSFUp.Divide(controlmc_SFUp);  _fOut.WriteTObject(ZmmScalesSFUp)  # always write out to the directory 
+
+  ZeeScalesSFUp = target.Clone(); ZeeScalesSFUp.SetName("diel_weights_%s_electronSF_Up" %cid)
+  ZeeScalesSFUp.Divide(controlmc_e_SFUp);  _fOut.WriteTObject(ZeeScalesSFUp)  # always write out to the directory 
+
+  ZmmScalesSFDown = target.Clone(); ZmmScalesSFDown.SetName("dimu_weights_%s_muonSF_Down" %cid)
+  ZmmScalesSFDown.Divide(controlmc_SFDown);  _fOut.WriteTObject(ZmmScalesSFDown)  # always write out to the directory 
+
+  ZeeScalesSFDown = target.Clone(); ZeeScalesSFDown.SetName("diel_weights_%s_electronSF_Down" %cid)
+  ZeeScalesSFDown.Divide(controlmc_e_SFDown);  _fOut.WriteTObject(ZeeScalesSFDown)  # always write out to the directory 
