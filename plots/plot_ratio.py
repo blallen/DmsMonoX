@@ -56,6 +56,12 @@ def plot_ratio(process,category):
         base    = "monolep_weights_"+category
         label   = "R_{W(l#nu)}"
         addsys  = 0.02
+
+    if (process=='wz'):
+        dirname = "Z_constraints_category_"+category 
+        base    = "wz_weights_"+category
+        label   = "R_{Z/W}"
+        # addsys  = 0.02
         
 
     ratio = f.Get(dirname+"/"+base)
@@ -141,7 +147,7 @@ def plot_ratio(process,category):
     uncertband.GetYaxis().SetTitle(label)
     uncertband.GetYaxis().CenterTitle()
     uncertband.GetYaxis().SetTitleSize(0.4*c.GetLeftMargin())
-    uncertband.GetXaxis().SetTitle("U [GeV]")
+    uncertband.GetXaxis().SetTitle("E_{T}^{#gamma} [GeV]")
     uncertband.GetXaxis().SetTitleSize(0.4*c.GetBottomMargin())
     uncertband.SetMaximum(1.5*ratio.GetMaximum())
     uncertband.SetMinimum(0.5*ratio.GetMinimum())
@@ -211,4 +217,6 @@ plot_ratio('dimu','monophoton')
 plot_ratio('monomu','monophoton')
 plot_ratio('diel','monophoton')
 plot_ratio('monoel','monophoton')
+
+plot_ratio('wz','monophoton')
 
