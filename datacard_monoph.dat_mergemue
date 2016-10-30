@@ -50,20 +50,23 @@ lumiscale rateParam * * 1.0
 # muonSF param 0.0 1
 # electronSF param 0.0 1
 
-#monophoton_stat_error_dilepCR_bin0 param 0.0 1
-#monophoton_stat_error_monolepCR_bin0 param 0.0 1
-
 monophoton_stat_error_dilepCR_bin0 param 0.0 1
-monophoton_stat_error_dilepCR_bin1 param 0.0 1
-monophoton_stat_error_dilepCR_bin2 param 0.0 1
-monophoton_stat_error_dilepCR_bin3 param 0.0 1
 monophoton_stat_error_monolepCR_bin0 param 0.0 1
+
+monophoton_stat_error_dilepCR_bin1 param 0.0 1
 monophoton_stat_error_monolepCR_bin1 param 0.0 1
+
+monophoton_stat_error_dilepCR_bin2 param 0.0 1
 monophoton_stat_error_monolepCR_bin2 param 0.0 1
+
+monophoton_stat_error_dilepCR_bin3 param 0.0 1
 monophoton_stat_error_monolepCR_bin3 param 0.0 1
 
+monophoton_stat_error_dilepCR_bin4 param 0.0 1
+monophoton_stat_error_monolepCR_bin4 param 0.0 1
 
-stat group = monophoton_stat_error_dilepCR_bin0 
+monophoton_stat_error_dilepCR_bin5 param 0.0 1
+monophoton_stat_error_monolepCR_bin5 param 0.0 1
 
-stat group += monophoton_stat_error_monolepCR_bin0
-
+monophoton_stat_error_dilepCR_bin6 param 0.0 1
+monophoton_stat_error_monolepCR_bin6 param 0.0 1

@@ -4,9 +4,9 @@
 out_file_name = 'mono-x.root'
 
 # bins = [175.0,190.0,250.0,400.0,700.0,1000.0]
-# bins = [175.0, 1000.0]
-# bins = [175.0, 250.0, 350.0, 500.0, 1000.0]
+# bins = [175.0, 200., 225., 250., 275., 300., 325., 350., 400., 450., 500., 600., 800., 1000.0] # maybe can do a bin at 800, improve limits, but tfactors and fits go weird
 bins = [175.0, 200., 250., 300., 400., 600., 800., 1000.0]
+# bins = [175.0, 1000.0]
 
 monophoton_category = {
 	    'name':"monophoton"
@@ -52,18 +52,18 @@ monophoton_category = {
                   ,"diel-phoPtHighMet-data_obs"   :['dilep','data',0,0]
 
                   # Single muon Control Region
-                  ,"monomu-phoPtHighMet-vvg"      :['monolep','vvg',1,0]
-                  ,"monomu-phoPtHighMet-zgamm"    :['monolep','zgamm',1,0]
-                  ,"monomu-phoPtHighMet-top"      :['monolep','top',1,0]
-                  ,"monomu-phoPtHighMet-wg"       :['monolep','wg',1,0]
-                  ,"monomu-phoPtHighMet-data_obs" :['monolep','data',0,0]
+                  ,"monomu-phoPtHighMet-vvg"      :['monomu','vvg',1,0]
+                  ,"monomu-phoPtHighMet-zgamm"    :['monomu','zgamm',1,0]
+                  ,"monomu-phoPtHighMet-top"      :['monomu','top',1,0]
+                  ,"monomu-phoPtHighMet-wg"       :['monomu','wg',1,0]
+                  ,"monomu-phoPtHighMet-data_obs" :['monomu','data',0,0]
 
                    # Single Electron Control Region
-                  ,"monoel-phoPtHighMet-vvg"       :['monolep','vvg',1,0]
-                  ,"monoel-phoPtHighMet-zgamm"     :['monolep','zgamm',1,0]
-                  ,"monoel-phoPtHighMet-top"       :['monolep','top',1,0]
-                  ,"monoel-phoPtHighMet-wg"        :['monolep','wg',1,0]
-                  ,"monoel-phoPtHighMet-data_obs"  :['monolep','data',0,0]
+                  ,"monoel-phoPtHighMet-vvg"       :['monoel','vvg',1,0]
+                  ,"monoel-phoPtHighMet-zgamm"     :['monoel','zgamm',1,0]
+                  ,"monoel-phoPtHighMet-top"       :['monoel','top',1,0]
+                  ,"monoel-phoPtHighMet-wg"        :['monoel','wg',1,0]
+                  ,"monoel-phoPtHighMet-data_obs"  :['monoel','data',0,0]
 
 	   	},
 }
