@@ -545,7 +545,7 @@ def plotPreFitPostFit(region,category,sb=False):
 
   gPad.RedrawAxis()
 
-  folder = "/home/ballen/public_html/cmsplots/monophoton/combinedfit/shape"
+  folder = "plots" # "/home/ballen/public_html/cmsplots/monophoton/combinedfit/shape"
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".pdf")
   c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".png")
   # c.SaveAs(folder+"/"+category+"_prefit_postfit_"+region+".C")
