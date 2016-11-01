@@ -56,7 +56,7 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
   CRs = [
   Channel("dimu",_wspace,out_ws,cid+'_'+model,ZmmScales)
   ,Channel("diel",_wspace,out_ws,cid+'_'+model,ZeeScales)
-  # ,Channel("wgsignal",_wspace,out_ws,cid+'_'+model,WZScales)
+  ,Channel("wgsignal",_wspace,out_ws,cid+'_'+model,WZScales)
   ]
 
   # ############################ USER DEFINED ###########################################################
@@ -67,21 +67,21 @@ def cmodel(cid,nam,_f,_fOut, out_ws, diag):
 
   CRs[0].addUncorrStatSysts(target, ZmmScales, "dimu", "dimu", cid, _fOut)
   CRs[1].addUncorrStatSysts(target, ZeeScales, "diel", "diel", cid, _fOut)
-  # CRs[2].addUncorrStatSysts(target, WZScales, "wz", "wz", cid, _fOut)
+  CRs[2].addUncorrStatSysts(target, WZScales, "wz", "wz", cid, _fOut)
   
   # lepSFSystSetup(_wspace, _fin, _fOut, cid)
-  # WZ_systSetup(_wspace, _fin, _fOut, cid)
+  WZ_systSetup(_wspace, _fin, _fOut, cid)
 
   #######################################################################################################
 
   # CRs[0].add_nuisance_shape('muonSF', _fOut)
   # CRs[1].add_nuisance_shape('electronSF', _fOut)
 
-  # CRs[2].add_nuisance_shape("vgPDF", _fOut)
-  # CRs[2].add_nuisance_shape("vgQCDscale", _fOut)
+  CRs[2].add_nuisance_shape("vgPDF", _fOut)
+  CRs[2].add_nuisance_shape("vgQCDscale", _fOut)
 
-  # for b in range(target.GetNbinsX()):
-  #   CRs[2].add_nuisance_shape("wz_ewk_%s_bin%d" % (cid,b), _fOut)
+  for b in range(target.GetNbinsX()):
+    CRs[2].add_nuisance_shape("wz_ewk_%s_bin%d" % (cid,b), _fOut)
 
   #######################################################################################################
   
