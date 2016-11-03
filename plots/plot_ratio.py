@@ -60,7 +60,7 @@ def plot_ratio(process,category):
     if (process=='wz'):
         dirname = "Z_constraints_category_"+category 
         base    = "wz_weights_"+category
-        label   = "R_{Z/W}"
+        label   = "R_{Z(#nu#nu)/W(l#nu)}"
         # addsys  = 0.02
         
 

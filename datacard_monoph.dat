@@ -48,7 +48,7 @@ minorPDF	shape	-		     -			 1		    -		       -		  1		     -			-		   -		      1	 
 egFakerate      lnN     -                    1.079		 -		    -		       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      -		       	 -		    - 		      -		     	 -		     	 
 # egFakerate    shape   -                    1		 	 -		    -		       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      -		       	 -		    - 		      -		     	 -		     	 
 hfakeTfactor	shape	-		     -			 -		    -		       1		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      -		       	 -		    - 		      -		     	 -		     	 
-# purity	shape	-		     -			 -		    -		       1		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      -		       	 -		    - 		      -		     	 -		     	 
+purity		shape	-		     -			 -		    -		       1		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      -		       	 -		    - 		      -		     	 -		     	 
 haloNorm	lnN	-		     -			 -		    1.690	       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      - 	       	 -		    - 		      -                  -		    	  
 # haloNorm	shape	-		     -			 -		    1	       	       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      - 	       	 -		    - 		      -                  -		    	  
 # haloShape	shapeU	-		     -			 -		    1	       	       -		  -		     -			-		   -		      -		       -		-		 -		  -		   -		    -		     -		      -			-		    -		      - 	       	 -		    - 		      -                  -		    	  
