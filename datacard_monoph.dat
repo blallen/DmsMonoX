@@ -58,6 +58,16 @@ lumiscale rateParam * * 3.1
 # muonSF param 0.0 1
 # electronSF param 0.0 1
 
+#vgPDF param 0.0 1
+#vgQCDscale param 0.0 1
+#wz_ewk_monophoton_bin0 param 0.0 1
+#wz_ewk_monophoton_bin1 param 0.0 1
+#wz_ewk_monophoton_bin2 param 0.0 1
+#wz_ewk_monophoton_bin3 param 0.0 1
+#wz_ewk_monophoton_bin4 param 0.0 1
+#wz_ewk_monophoton_bin5 param 0.0 1
+#wz_ewk_monophoton_bin6 param 0.0 1
+
 monophoton_stat_error_dimuCR_bin0 param 0.0 1
 monophoton_stat_error_dielCR_bin0 param 0.0 1
 monophoton_stat_error_monomuCR_bin0 param 0.0 1
@@ -126,23 +136,23 @@ monophoton_stat_error_monoelCR_bin6 param 0.0 1
 zstat group = monophoton_stat_error_dimuCR_bin0 monophoton_stat_error_dielCR_bin0
 wstat group = monophoton_stat_error_monomuCR_bin0 monophoton_stat_error_monoelCR_bin0
 
-zstat group += monophoton_stat_error_dimuCR_bin1 monophoton_stat_error_dielCR_bin1
-wstat group += monophoton_stat_error_monomuCR_bin1 monophoton_stat_error_monoelCR_bin1
+#zstat group += monophoton_stat_error_dimuCR_bin1 monophoton_stat_error_dielCR_bin1
+#wstat group += monophoton_stat_error_monomuCR_bin1 monophoton_stat_error_monoelCR_bin1
 
-zstat group += monophoton_stat_error_dimuCR_bin2 monophoton_stat_error_dielCR_bin2
-wstat group += monophoton_stat_error_monomuCR_bin2 monophoton_stat_error_monoelCR_bin2
+#zstat group += monophoton_stat_error_dimuCR_bin2 monophoton_stat_error_dielCR_bin2
+#wstat group += monophoton_stat_error_monomuCR_bin2 monophoton_stat_error_monoelCR_bin2
 
-zstat group += monophoton_stat_error_dimuCR_bin3 monophoton_stat_error_dielCR_bin3
-wstat group += monophoton_stat_error_monomuCR_bin3 monophoton_stat_error_monoelCR_bin3
+#zstat group += monophoton_stat_error_dimuCR_bin3 monophoton_stat_error_dielCR_bin3
+#wstat group += monophoton_stat_error_monomuCR_bin3 monophoton_stat_error_monoelCR_bin3
 
-zstat group += monophoton_stat_error_dimuCR_bin4 monophoton_stat_error_dielCR_bin4
-wstat group += monophoton_stat_error_monomuCR_bin4 monophoton_stat_error_monoelCR_bin4
+#zstat group += monophoton_stat_error_dimuCR_bin4 monophoton_stat_error_dielCR_bin4
+#wstat group += monophoton_stat_error_monomuCR_bin4 monophoton_stat_error_monoelCR_bin4
 
-zstat group += monophoton_stat_error_dimuCR_bin5 monophoton_stat_error_dielCR_bin5
-wstat group += monophoton_stat_error_monomuCR_bin5 monophoton_stat_error_monoelCR_bin5
+#zstat group += monophoton_stat_error_dimuCR_bin5 monophoton_stat_error_dielCR_bin5
+#wstat group += monophoton_stat_error_monomuCR_bin5 monophoton_stat_error_monoelCR_bin5
 
-zstat group += monophoton_stat_error_dimuCR_bin6 monophoton_stat_error_dielCR_bin6
-wstat group += monophoton_stat_error_monomuCR_bin6 monophoton_stat_error_monoelCR_bin6
+#zstat group += monophoton_stat_error_dimuCR_bin6 monophoton_stat_error_dielCR_bin6
+#wstat group += monophoton_stat_error_monomuCR_bin6 monophoton_stat_error_monoelCR_bin6
 
 #zstat group += monophoton_stat_error_dimuCR_bin7 monophoton_stat_error_dielCR_bin7
 #wstat group += monophoton_stat_error_monomuCR_bin7 monophoton_stat_error_monoelCR_bin7
