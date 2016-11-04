@@ -11,7 +11,8 @@ shapes zg                        monophoton_dimu    combined_model.root combined
 shapes *                         monophoton_signal  combined_model.root combinedws:monophoton_signal_$PROCESS combinedws:monophoton_signal_$PROCESS_$SYSTEMATIC
 shapes data_obs                  monophoton_signal  combined_model.root combinedws:monophoton_signal_data
 shapes dmv-1000-1                 monophoton_signal  combined_model.root combinedws:monophoton_signal_dmv-1000-1 combinedws:monophoton_signal_dmv-1000-1_$SYSTEMATIC
-shapes wg                        monophoton_signal  combined_model.root combinedws:monophoton_signal_wg_model
+# shapes wg                        monophoton_signal  combined_model.root combinedws:monophoton_signal_wg_model
+shapes wg                        monophoton_signal  combined_model.root combinedws:monophoton_wgsignal_zg_model
 shapes zg                        monophoton_signal  combined_model.root combinedws:monophoton_signal_zg_model
 shapes *                         monophoton_monoel  combined_model.root combinedws:monophoton_monoel_$PROCESS combinedws:monophoton_monoel_$PROCESS_$SYSTEMATIC
 shapes data_obs                  monophoton_monoel  combined_model.root combinedws:monophoton_monoel_data
@@ -58,9 +59,9 @@ lumiscale rateParam * * 3.1
 # muonSF param 0.0 1
 # electronSF param 0.0 1
 
-#vgPDF param 0.0 1
-#vgQCDscale param 0.0 1
-#wz_ewk_monophoton_bin0 param 0.0 1
+vgPDF param 0.0 1
+vgQCDscale param 0.0 1
+wz_ewk_monophoton_bin0 param 0.0 1
 #wz_ewk_monophoton_bin1 param 0.0 1
 #wz_ewk_monophoton_bin2 param 0.0 1
 #wz_ewk_monophoton_bin3 param 0.0 1
@@ -73,35 +74,35 @@ monophoton_stat_error_dielCR_bin0 param 0.0 1
 monophoton_stat_error_monomuCR_bin0 param 0.0 1
 monophoton_stat_error_monoelCR_bin0 param 0.0 1
 
-monophoton_stat_error_dimuCR_bin1 param 0.0 1
-monophoton_stat_error_dielCR_bin1 param 0.0 1
-monophoton_stat_error_monomuCR_bin1 param 0.0 1
-monophoton_stat_error_monoelCR_bin1 param 0.0 1
+#monophoton_stat_error_dimuCR_bin1 param 0.0 1
+#monophoton_stat_error_dielCR_bin1 param 0.0 1
+#monophoton_stat_error_monomuCR_bin1 param 0.0 1
+#monophoton_stat_error_monoelCR_bin1 param 0.0 1
 
-monophoton_stat_error_dimuCR_bin2 param 0.0 1
-monophoton_stat_error_dielCR_bin2 param 0.0 1
-monophoton_stat_error_monomuCR_bin2 param 0.0 1
-monophoton_stat_error_monoelCR_bin2 param 0.0 1
+#monophoton_stat_error_dimuCR_bin2 param 0.0 1
+#monophoton_stat_error_dielCR_bin2 param 0.0 1
+#monophoton_stat_error_monomuCR_bin2 param 0.0 1
+#monophoton_stat_error_monoelCR_bin2 param 0.0 1
 
-monophoton_stat_error_dimuCR_bin3 param 0.0 1
-monophoton_stat_error_dielCR_bin3 param 0.0 1
-monophoton_stat_error_monomuCR_bin3 param 0.0 1
-monophoton_stat_error_monoelCR_bin3 param 0.0 1
+#monophoton_stat_error_dimuCR_bin3 param 0.0 1
+#monophoton_stat_error_dielCR_bin3 param 0.0 1
+#monophoton_stat_error_monomuCR_bin3 param 0.0 1
+#monophoton_stat_error_monoelCR_bin3 param 0.0 1
 
-monophoton_stat_error_dimuCR_bin4 param 0.0 1
-monophoton_stat_error_dielCR_bin4 param 0.0 1
-monophoton_stat_error_monomuCR_bin4 param 0.0 1
-monophoton_stat_error_monoelCR_bin4 param 0.0 1
+#monophoton_stat_error_dimuCR_bin4 param 0.0 1
+#monophoton_stat_error_dielCR_bin4 param 0.0 1
+#monophoton_stat_error_monomuCR_bin4 param 0.0 1
+#monophoton_stat_error_monoelCR_bin4 param 0.0 1
 
-monophoton_stat_error_dimuCR_bin5 param 0.0 1
-monophoton_stat_error_dielCR_bin5 param 0.0 1
-monophoton_stat_error_monomuCR_bin5 param 0.0 1
-monophoton_stat_error_monoelCR_bin5 param 0.0 1
+#monophoton_stat_error_dimuCR_bin5 param 0.0 1
+#monophoton_stat_error_dielCR_bin5 param 0.0 1
+#monophoton_stat_error_monomuCR_bin5 param 0.0 1
+#monophoton_stat_error_monoelCR_bin5 param 0.0 1
 
-monophoton_stat_error_dimuCR_bin6 param 0.0 1
-monophoton_stat_error_dielCR_bin6 param 0.0 1
-monophoton_stat_error_monomuCR_bin6 param 0.0 1
-monophoton_stat_error_monoelCR_bin6 param 0.0 1
+#monophoton_stat_error_dimuCR_bin6 param 0.0 1
+#monophoton_stat_error_dielCR_bin6 param 0.0 1
+#monophoton_stat_error_monomuCR_bin6 param 0.0 1
+#monophoton_stat_error_monoelCR_bin6 param 0.0 1
 
 #monophoton_stat_error_dimuCR_bin7 param 0.0 1
 #monophoton_stat_error_dielCR_bin7 param 0.0 1
