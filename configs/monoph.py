@@ -5,8 +5,8 @@ out_file_name = 'mono-x.root'
 
 # bins = [175.0,190.0,250.0,400.0,700.0,1000.0]
 # bins = [175.0, 200., 225., 250., 275., 300., 325., 350., 400., 450., 500., 600., 800., 1000.0] # maybe can do a bin at 800, improve limits, but tfactors and fits go weird
-# bins = [175.0, 200., 250., 300., 400., 600., 800., 1000.0]
-bins = [175.0, 1000.0]
+bins = [175.0, 200., 250., 300., 400., 600., 800., 1000.0]
+# bins = [175.0, 1000.0]
 
 monophoton_category = {
 	    'name':"monophoton"
@@ -18,7 +18,7 @@ monophoton_category = {
             ,"additionalvars":[] #[['phoPtHighMet',100,200,1250]]
             ,"pdfmodel":0
             ,"systematics":['lumi', 'gec', 'jec', 'photonSF', 'customIDSF', 'leptonVetoSF', 'muonSF', 'electronSF',
-                            'haloNorm', 'haloShape', 'hfakeTfactor', 'purity', 'egFakerate', 
+                            'haloNorm', 'haloShape', 'spikeNorm', 'hfakeTfactor', 'purity', 'egFakerate', 
                             'minorPDF', 'minorQCDscale', 'vgPDF', 'vgQCDscale', 'wgEWK', 'zgEWK']
             ,"samples":
 	   	{          
@@ -26,6 +26,7 @@ monophoton_category = {
                    "monoph-phoPtHighMet-minor"    :['signal','minor',1,0]
                   ,"monoph-phoPtHighMet-gjets"    :['signal','gjets',1,0]
                   ,"monoph-phoPtHighMet-vvg"      :['signal','vvg',1,0]
+                  ,"monoph-phoPtHighMet-spike"    :['signal','spike',1,0]
                   ,"monoph-phoPtHighMet-halo"     :['signal','halo',1,0]
                   ,"monoph-phoPtHighMet-hfake"    :['signal','hfake',1,0]
                   ,"monoph-phoPtHighMet-efake"    :['signal','efake',1,0]
@@ -54,6 +55,8 @@ monophoton_category = {
                   # Single muon Control Region
                   ,"monomu-phoPtHighMet-vvg"      :['monomu','vvg',1,0]
                   ,"monomu-phoPtHighMet-zgamm"    :['monomu','zgamm',1,0]
+                  ,"monomu-phoPtHighMet-gg"       :['monomu','gg',1,0]
+                  ,"monomu-phoPtHighMet-wjets"    :['monomu','wjets',1,0]
                   ,"monomu-phoPtHighMet-top"      :['monomu','top',1,0]
                   ,"monomu-phoPtHighMet-wg"       :['monomu','wg',1,0]
                   ,"monomu-phoPtHighMet-data_obs" :['monomu','data',0,0]
@@ -61,6 +64,8 @@ monophoton_category = {
                    # Single Electron Control Region
                   ,"monoel-phoPtHighMet-vvg"       :['monoel','vvg',1,0]
                   ,"monoel-phoPtHighMet-zgamm"     :['monoel','zgamm',1,0]
+                  ,"monoel-phoPtHighMet-gg"        :['monoel','gg',1,0]
+                  ,"monoel-phoPtHighMet-wjets"     :['monoel','wjets',1,0]
                   ,"monoel-phoPtHighMet-top"       :['monoel','top',1,0]
                   ,"monoel-phoPtHighMet-wg"        :['monoel','wg',1,0]
                   ,"monoel-phoPtHighMet-data_obs"  :['monoel','data',0,0]

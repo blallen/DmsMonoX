@@ -110,22 +110,22 @@ for syst, procs in nuisances.items():
 
             if not var:
                 up.GetXaxis().SetTitle('E_{T}^{#gamma} (GeV)')
-                rcanvas.legend.add('up', title = 'Up', lcolor = r.kRed, lwidth = 2)
+                rcanvas.legend.add('up', title = 'Up', mcolor = r.kRed, lcolor = r.kRed, lwidth = 2)
                 rcanvas.legend.apply('up', up)
                 upId = rcanvas.addHistogram(up, drawOpt = 'L')
 
                 down.GetXaxis().SetTitle('E_{T}^{#gamma} (GeV)')
-                rcanvas.legend.add('down', title = 'Down', lcolor = r.kBlue, lwidth = 2)
+                rcanvas.legend.add('down', title = 'Down', mcolor = r.kBlue, lcolor = r.kBlue, lwidth = 2)
                 rcanvas.legend.apply('down', down)
                 downId = rcanvas.addHistogram(down, drawOpt = 'L')
 
                 # rcanvas.rlimits = [0.5, 1.5]
-                rcanvas.ylabel = "Variation / Nominal"
+                rcanvas.rtitle = "Variation / Nominal"
                 rcanvas.printWeb(plotDir, syst, hList = [upId, downId, nomId], rList = [nomId, upId, downId])
 
             else:
                 var.GetXaxis().SetTitle('E_{T}^{#gamma} (GeV)')
-                rcanvas.legend.add('var', title = 'Var', lcolor = r.kRed, lwidth = 2)
+                rcanvas.legend.add('var', title = 'Var', mcolor = r.kRed, lcolor = r.kRed, lwidth = 2)
                 rcanvas.legend.apply('var', var)
                 varId = rcanvas.addHistogram(var, drawOpt = 'L')
 

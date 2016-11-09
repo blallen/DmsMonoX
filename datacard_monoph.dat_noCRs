@@ -9,33 +9,34 @@ shapes dmv-1000-1                 monophoton_signal  combined_model.root combine
 bin          monophoton_signal  
 observation  -1.0               
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                     monophoton_signal   monophoton_signal   monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  
-process                 dmv-1000-1           efake               halo               hfake              gjets              minor              vvg                wg                 zg                 
-process      		-1                   1                   3                  4                  2                  5                  6                  7                  8                 
-rate         		-1                   -1                  -1                 -1                 -1                 -1                 -1                 -1                -1                
-----------------------------------------------------------------------------------------------------------------------------------									
-lumi            lnN     1.04                 -                   -                  -                  1.04               1.04               1.04               1.04               1.04                  
-# lumi        	shape   1                    -                   -                  -                  1                  1                  1                  1                  1                  
-gec		shape	1		     -			 -		    -	       	       1		  1		     1			1		   1		      
-jec		shape	1		     -			 -		    -	       	       1		  1		     1			1		   1		      
-photonSF	shape	1   		     -			 -		    -	       	       1    		  1   		     1   		1		   1		      
-customIDSF	lnN	1.055		     -			 -		    -	       	       1.055		  1.055		     1.055		1.055		   1.055		      
-# customIDSF	shape	1   		     -			 -		    -	       	       1   		  1   		     1   		1		   1		      
-leptonVetoSF	lnN	1.020		     -			 -		    -	       	       1.020		  1.020		     1.020		1.020		   1.020		      
-# leptonVetoSF	shape	1   		     -			 -		    -	       	       1   		  1   		     1   		1		   1		      
-minorQCDscale	lnN	-		     -			 -		    -	       	       1.033		  1.033		     1.033		-		   -		      
-# minorQCDscale shape	-		     -			 -		    -	       	       1   		  1   		     1   		-		   -		      
-minorPDF	shape	-		     -			 -		    -	       	       1		  1		     -			-		   -		      
-egFakerate      lnN     -                    1.079		 -		    -	       	       -		  -		     -			-		   -		      
-# egFakerate    shape   -                    1		 	 -		    -	       	       -		  -		     -			-		   -		      
-hfakeTfactor	shape	-		     -			 -		    1	       	       -		  -		     -			-		   -		      
-purity		shape	-		     -			 -		    1	       	       -		  -		     -			-		   -		      
-haloNorm	lnN	-		     -			 1.690	       	    -		       -    		  -		     -			-		   -		      
-# haloNorm	shape	-		     -			 1	       	    -	       	       -		  -		     -			-		   -		      
-# haloShape	shapeU	-		     -			 1	       	    -	       	       -		  -		     -			-		   -		      
-vgQCDscale	shape	-		     -			 -		    -	       	       -		  -		     -			1		   1
-vgPDF		shape	-		     -			 -		    -	       	       -		  -		     -			1		   1
-wgEWK		shape	-		     -			 -		    -	       	       -		  -		     -			1		   -
-zgEWK		shape	-		     -			 -		    -	       	       -		  -		     -			-		   1
+bin                     monophoton_signal   monophoton_signal   monophoton_signal  monophoton_signal   monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  monophoton_signal  
+process                 dmv-1000-1           efake               halo               hfake              spike              gjets              minor              vvg                wg                 zg                 
+process                 -1                   1                   2                  3                  4                  5                  6                  7                  8                  9                 
+rate                    -1                   -1                  -1                 -1                 -1                 -1                 -1                 -1                 -1                -1                
+-----------------------------------------------------------------------------------------------------------------------------------------------------                                                                      
+lumi            lnN     1.04                 -                   -                  -                  -                  1.04               1.04               1.04               1.04               1.04                  
+# lumi          shape   1                    -                   -                  -                  -                  1                  1                  1                  1                  1                  
+gec             shape   1                    -                   -                  -                  -                  1                  1                  1                  1                  1                  
+jec             shape   1                    -                   -                  -                  -                  1                  1                  1                  1                  1                  
+photonSF        shape   1                    -                   -                  -                  -                  1                  1                  1                  1                  1                  
+customIDSF      lnN     1.055                -                   -                  -                  -                  1.055              1.055              1.055              1.055              1.055                      
+# customIDSF    shape   1                    -                   -                  -                  -                  1                  1                  1                  1                  1                  
+leptonVetoSF    lnN     1.020                -                   -                  -                  -                  1.020              1.020              1.020              1.020              1.020                      
+# leptonVetoSF  shape   1                    -                   -                  -                  -                  1                  1                  1                  1                  1                  
+minorQCDscale   lnN     -                    -                   -                  -                  -                  1.033              1.033              1.033              -                  -                  
+# minorQCDscale shape   -                    -                   -                  -                  -                  1                  1                  1                  -                  -                  
+minorPDF        shape   -                    -                   -                  -                  -                  1                  1                  -                  -                  -                  
+egFakerate      lnN     -                    1.079               -                  -                  -                  -                  -                  -                  -                  -                  
+# egFakerate    shape   -                    1                   -                  -                  -                  -                  -                  -                  -                  -                  
+hfakeTfactor    shape   -                    -                   -                  1                  -                  -                  -                  -                  -                  -                  
+purity          shape   -                    -                   -                  1                  -                  -                  -                  -                  -                  -                  
+haloNorm        lnN     -                    -                   2.00               -                  -                  -                  -                  -                  -                  -                  
+# haloNorm      shape   -                    -                   1                  -                  -                  -                  -                  -                  -                  -                  
+haloShape       shapeU  -                    -                   1                  -                  -                  -                  -                  -                  -                  -
+spikeNorm       lnN     -                    -                   -                  -                  1.79               -                  -                  -                  -                  -
+vgQCDscale      shape   -                    -                   -                  -                  -                  -                  -                  -                  1                  1
+vgPDF           shape   -                    -                   -                  -                  -                  -                  -                  -                  1                  1
+wgEWK           shape   -                    -                   -                  -                  -                  -                  -                  -                  1                  -
+zgEWK           shape   -                    -                   -                  -                  -                  -                  -                  -                  -                  1
 ----------------------------------------------------------------------------------------------------------------------------------
 lumiscale rateParam * * 1.0
